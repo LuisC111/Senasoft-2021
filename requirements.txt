@@ -1,4 +1,4 @@
-// Instalar librerias necesarias para la ejecución correcta del proyecto
+# Instalar librerias necesarias para la ejecución correcta del proyecto
 flask
 flask_sqlalchemy
 flask
