@@ -1,0 +1,8 @@
+// Instalar librerias necesarias para la ejecución correcta del proyecto
+flask
+flask_sqlalchemy
+flask
+flask_login
+fpdf
+mariadb
+flask_sqlalchemy
