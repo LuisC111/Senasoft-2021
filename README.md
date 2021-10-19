@@ -1,70 +1,151 @@
-# Getting Started with Senasoft - Flask app
+# Flask App
 
-This project was bootstrapped with [Create Flask App](https://github.com/isakal/create-flask-app).
+Using Flask to build a Senasoft exercise.
 
-## Available Scripts
+Integration with Flask-restplus, Flask-Cors, Flask-Testing, Flask-SQLalchemy,and Flask-OAuth extensions.
 
-In the project directory, you can run:
+### Extension:
+- Restful: [Flask-restplus](http://flask-restplus.readthedocs.io/en/stable/)
 
-### `flask run`
+- SQL ORM: [Flask-SQLalchemy](http://flask-sqlalchemy.pocoo.org/2.1/)
 
-Runs the app in the development mode.\
-Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/ to view it in the browser.
+- Testing: [Flask-Testing](http://flask.pocoo.org/docs/0.12/testing/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- OAuth: [Flask-OAuth](https://pythonhosted.org/Flask-OAuth/)
 
-### `yarn test`
+- ESDAO: [elasticsearch](https://elasticsearch-py.readthedocs.io/en/master/) , [elasticsearch-dsl](http://elasticsearch-dsl.readthedocs.io/en/latest/index.html)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Install with pip:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+$ pip install -r requirements.txt
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Flask Application Structure 
+```
+.
+|──────app/
+| |────__init__.py
+| |────api/
+| | |────__init__.py
+| | |────cve/
+| | |────user/
+| | |────oauth/
+| |──────config.Development.cfg
+| |──────config.Production.cfg
+| |──────config.Testing.cfg
+| |────dao/
+| |────model/
+| |────oauth/
+| |────util/
+|──────run.py
+|──────tests/
 
-### `yarn eject`
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Flask Configuration
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Example
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+app = Flask(__name__)
+app.config['DEBUG'] = True
+```
+### Configuring From Files
 
-## Learn More
+#### Example Usage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+app = Flask(__name__ )
+app.config.from_pyfile('config.Development.cfg')
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### cfg example
 
-### Code Splitting
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+##Flask settings
+DEBUG = True  # True/False
+TESTING = False
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+....
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
 
-### Advanced Configuration
+#### Builtin Configuration Values
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+SERVER_NAME: the name and port number of the server. 
 
-### Deployment
+JSON_SORT_KEYS : By default Flask will serialize JSON objects in a way that the keys are ordered.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- [reference¶](http://flask.pocoo.org/docs/0.12/config/)
 
-### `yarn build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### OAuth Setup
+add your `client_id` and `client_secret` into config file.
+
+### ESDAO Setup
+add your `ES host` and `ES port` into config file 
+
+
+
+ 
+## Run Flask
+### Run flask for develop
+```
+$ python webapp/run.py
+```
+In flask, Default port is `5000`
+
+Swagger document page:  `http://127.0.0.1:5000/`
+
+### Run flask for production
+
+### Run with Docker
+
+```
+$ docker build -t flask-example .
+
+$ docker run -p 5000:5000 --name flask-example flask-example 
+ 
+```
+
+In image building, the webapp folder will also add into the image
+
+
+
+## Reference
+
+Offical Website
+
+- [Flask](http://flask.pocoo.org/)
+- [Flask Extension](http://flask.pocoo.org/extensions/)
+- [Flask restplus](http://flask-restplus.readthedocs.io/en/stable/)
+- [Flask-SQLalchemy](http://flask-sqlalchemy.pocoo.org/2.1/)
+- [Flask-OAuth](https://pythonhosted.org/Flask-OAuth/)
+- [elasticsearch-dsl](http://elasticsearch-dsl.readthedocs.io/en/latest/index.html)
+- [gunicorn](http://gunicorn.org/)
+
+Tutorial
+
+- [Flask Overview](https://www.slideshare.net/maxcnunes1/flask-python-16299282)
+- [In Flask we trust](http://igordavydenko.com/talks/ua-pycon-2012.pdf)
+
+[Wiki Page](https://github.com/tsungtwu/flask-example/wiki)
+
+
+
+## Changelog
+
+- Version 2.3 : add dockerfile
+- Version 2.2 : add ESDAO module
+- Version 2.1 : add OAuth extension: FLASK-OAuth, and google oauth example
+- Version 2.0 : add SQL ORM extension: FLASK-SQLAlchemy
+- Version 1.1 : update nosetest
+- Version 1.0 : basic flask-example with Flask-Restplus, Flask-Tesintg
