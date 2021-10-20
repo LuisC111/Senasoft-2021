@@ -50,6 +50,7 @@ class Usuario(UserMixin, db.Model):
     telefonoUsuario = db.Column(db.String(10))
     numeroDocumento = db.Column(db.Integer)
     estadoUsuario = db.Column(db.Boolean(False))
+    confirmationHash = db.Column(db.String(50))
 
     # Relaciones entre tablas
     idTipoDocumentoFK = db.Column(db.Integer, db.ForeignKey('TipoDocumento.idTipoDocumento'))
@@ -61,7 +62,7 @@ class Usuario(UserMixin, db.Model):
         return (self.idUsuario)
 
     # Definición de las relaciones 
-    def __init__(self, correoUsuario, contraseñaUsuario, nombreUsuario, apellidoUsuario, telefonoUsuario, numeroDocumento, estadoUsuario, idTipoDocumentoFK, idTipoUsuarioFK):
+    def __init__(self, correoUsuario, contraseñaUsuario, nombreUsuario, apellidoUsuario, telefonoUsuario, numeroDocumento, estadoUsuario, idTipoDocumentoFK, idTipoUsuarioFK, confirmationHash):
         self.correoUsuario = correoUsuario
         self.contraseñaUsuario = contraseñaUsuario
         self.nombreUsuario = nombreUsuario
@@ -71,6 +72,7 @@ class Usuario(UserMixin, db.Model):
         self.estadoUsuario = estadoUsuario
         self.idTipoDocumentoFK = idTipoDocumentoFK
         self.idTipoUsuarioFK = idTipoUsuarioFK
+        self.confirmationHash = confirmationHash
 
 # Definición de la clase TipoDocumento mediante SQLAlchemy
 class TipoDocumento(db.Model):

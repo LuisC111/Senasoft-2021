@@ -18,8 +18,8 @@
                     <form action="{{ url_for('auth.login') }}" method="POST">
                         <div class="p-4">
                             <div class="input-group mb-3">
-                                <span class="input-group-text bg-primary"><i
-                                        class="bi bi-person-plus-fill text-white"></i></span>
+                                <span class="input-group-text bg-primary">
+                                <i class="bi bi-person-plus-fill text-white"></i></span>
                                 <input name="mailUsuario" type="text" class="form-control" placeholder="Nombre de usuario">
                             </div>
                             <div class="input-group mb-3">
@@ -42,7 +42,9 @@
                             <p class="text-center mt-4">¿No tienes una cuenta?
                                 <a href="register" class="text-primary">Registrate</span>
                             </p>
-                            <p class="text-center text-primary">¿Olvidaste tu contraseña?</p>
+                            <a href="{{ url_for('auth.recuperarPass') }}">
+                                <p class="text-center text-primary">¿Olvidaste tu contraseña?</p>
+                            </a>
                         </div>
                     </form>
                 </div>

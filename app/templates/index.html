@@ -77,7 +77,7 @@
 
                         <div class="col-lg-4 col-md-5 col-12 mx-auto">
                             <div class="featured-circle bg-white shadow-lg d-flex justify-content-center align-items-center">
-                                <p class="featured-text"><span class="featured-number">8</span> Años<br> de experiencia.</p>
+                                <p class="featured-text"><span class="featured-number">#1</span> Top<br> en control de turnos médicos.</p>
                             </div>
                         </div>
 
@@ -89,86 +89,67 @@
 
             
             <section class="section-padding pb-0" id="reviews">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-12">
-                            <h2 class="text-center mb-lg-5 mb-4">Nuestros usuarios</h2>
-
-                            <div class="owl-carousel reviews-carousel">
-
-                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
-                                    <div class="reviews-stars">
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star"></i>
-                                    </div>
-
-                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>Gran control de turnos</strong></p>
-
-                                    <p class="reviews-text w-100">MediFlow es la mejor opción a la hora de llevar el control de tus turnos médicos.</p>
-
-                                    <img src="{{ url_for('static', filename='img/reviews/beautiful-woman-face-portrait-brown-background.jpeg') }}" class="img-fluid reviews-image" alt="">
-
-                                    <figcaption class="ms-4">
-                                        <strong>Lina</strong>
-
-                                        <span class="text-muted">Médico</span>
-                                    </figcaption>
-                                </figure>
-
-                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
-                                    <div class="reviews-stars">
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star"></i>
-                                    </div>
-
-                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>El mejor sistema!</strong></p>
-
-                                    <p class="reviews-text w-100">Con esta página web la programación y control de turnos no vuelve a ser un dolor de cabeza</p>
-
-                                    <img src="{{ url_for('static', filename='img/reviews/beautiful-woman-face-portrait-brown-background.jpeg') }}" class="img-fluid reviews-image" alt="">
-
-                                    <figcaption class="ms-4">
-                                        <strong>Jorge</strong>
-
-                                        <span class="text-muted">Encargado</span>
-                                    </figcaption>
-                                </figure>
-
-                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
-                                    <div class="reviews-stars">
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                    </div>
-
-                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>Buen servicio!</strong></p>
-
-                                    <p class="reviews-text w-100">La atención y los tiempos de respuesta con los administradores son geniales.</p>
-
-                                    <img src="{{ url_for('static', filename='img/reviews/portrait-british-woman.jpeg') }}" class="img-fluid reviews-image" alt="">
-
-                                    <figcaption class="ms-4">
-                                        <strong>Laura</strong>
-
-                                        <span class="text-muted">Nuevo usuario</span>
-                                    </figcaption>
-                                </figure>
+<div class="container">
+    <div class="accordion d-flex justify-content-center align-items-center height" id="accordionExample">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="p-3">
+                    <ul class="testimonial-list">
+                        <li>
+                            <div class="card p-3" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <div class="d-flex flex-row align-items-center"> <img src="../static/img/gallery/mujer.jpg" width="50" class="rounded-circle">
+                                    <div class="d-flex flex-column ml-2"> <span class="font-weight-normal">Maria Rodriguez</span> <span>Médica general, Hospital</span> </div>
+                                </div>
                             </div>
+                        </li>
+                        <li>
+                            <div class="card p-3" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <div class="d-flex flex-row align-items-center"> <img src="../static/img/gallery/man.jpg" width="50" class="rounded-circle">
+                                    <div class="d-flex flex-column ml-2"> <span class="font-weight-normal">Cristian Alarcon</span> <span>Encargado, Hospital</span> </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="card p-3" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <div class="d-flex flex-row align-items-center"> <img src="../static/img/gallery/mujer2.png" width="50" class="rounded-circle">
+                                    <div class="d-flex flex-column ml-2"> <span class="font-weight-normal">Lina Vargas</span> <span>Administradora, Hospital</span> </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 testimonials-margin">
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <h4>El mejor sistema de control de turnos en el sector médico</h4>
+                            <div class="ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                            <p>Antes de conocer e implementar MediFlow trabajamos turnos extra, no había una manera efectiva y rápida de llevar un control de los turnos del personal, era muy dificil asignar días vacacionales etc. Pero ahora con MediFlow todo es mas fácil, lo hace todo automáticamente; Es capaz de asignar turnos, organizar horarios y visualizar mediante una interfaz muy intuitiva sus turnos, días vacacionalesy condiciones.</p>
+                        </div>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <h4>Gracias por el servicio</h4>
+                            <div class="ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                            <p>Gracias al hecho de haber implmentado MediFlow en nuestro hospital ha sido una de las mayores decisiones que hemos tomado, ya que no solo nos facilita el acceso y gestión de turnos del personal médico, sino que además prestan un gran servicio, en cuanto a tiempos de respuesta y control.</p>
+                        </div>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <h4>Lo mejor para optimizar los tiempos!</h4>
+                            <div class="ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                            <p>Antes de obtener MediFlow, el tema de los turnos siempre era un dolor de cabeza para todo el personal, el tema de gestión y control era una total perdida de tiempo, pero ahora gracias a MediFlow ahorramos mucho tiempo, si hay que realizar un cambio dentro de los turnos se cambía sin problemas.</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
             </section>
 
-            <section class="section-padding" id="booking">
+            <section class="section-padding" id="contact">
                 <div class="container">
                     <div class="row">
                     
@@ -176,10 +157,10 @@
                             <div class="booking-form">
                                 
                                 <h2 class="text-center mb-lg-3 mb-2">Contáctanos</h2>
-                            
+                                <p>¿Presentas dudas? o quizás desees enviarnos peticiones quejas o recursos!. Tu opinión es muy importante para nosotros, por ello en el momento que desees puedes hacer click en ¡Enviar! en donde accederas a un formato de correo electrónico para contactarnos, nuetros usuarios son la prioridad número 1 de <span class="text-primary">MediFlow</span> y por eso te atenderemos en cuestión de minutos. </p>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 col-6 mx-auto">
-                                        <button type="submit" class="form-control" id="submit-button">Enviar!</button>
+                                        <button type="submit" class="glow-on-hover" type="button" id="submit-button">Enviar!</button>
                                     </div>
                                 </div>
 

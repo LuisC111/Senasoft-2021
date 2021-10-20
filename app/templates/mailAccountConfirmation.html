@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Account Confirmation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mail_style.css') }}">
+</head>
+<body>
+
+<table style="max-width: 600px; padding: 10px; margin:0 auto; border-collapse: collapse;">
+
+	
+	<tr>
+		<td style="background-color: #FFF6F5;">
+			<div style="color: black; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif">
+                
+                <p style="text-align: center;">
+                <img src="https://i.postimg.cc/3N8B6Q88/logo.png" width="120px;">
+				<h2 style="color:black; margin: 0 0 7px">¡Hola {{nombreUsuario}}!</h2>
+                <h2>Bienvenido, estamos encantados de que se haya unido a nosotros.</h2>
+				<p>
+				Su Email fue registrado exitosamente  Esperemos que pueda disfrutar de una experiencia excelente.
+                </p>
+                <p> Verifique Sesión  y comience  a explorar nuestros productos.</p>
+				<br>
+                <br>
+				<div style="width: 100%; text-align: center">
+				<a style="text-decoration: none; border-radius: 5px; padding: 11px 23px; color: white; background-color:black" href="http://127.0.0.1:5000/auth/confirm/{{hash}}">Verificar Sesión</a>
+                <br>
+                <br>
+                <p>¿tienes alguna pregunta?        Obtén más  información  sobre MediFlow por nuestras redes sociales
+                </p>
+				</div>
+				<p style="color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0">FLOWY 2021 © </p>
+			</div>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

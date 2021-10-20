@@ -1,0 +1,13 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.letra{
+	font-family: arial, sans-serif;
+}
+.td{
+    border: 2px solid rgb(155, 150, 150);
+    text-align: left;
+    padding: 2px;
+}
