@@ -1,18 +1,206 @@
-{% extends 'base.html' %} {% block css %}
-<link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" type="text/css"> {% endblock css %} {% block title %} Home Page | Cars {% endblock title %} {% block header %} {% include 'headerModule.html' %} {% endblock header %} {% block main %}
+{% extends 'base.html' %}
+{% block title %}
+{{ super() }}
+ Home Page 
+{% endblock title %}
+{% block header_type %}
+ {% include 'header.html' %}
+{% endblock header_type %}
 
-<main>
-    <img src="{{ url_for('static', filename='img/cars.png') }}" alt="Logo-cars" class="main-avatar" />
-    <p class="main-name">Bienvenido a Cars!</p>
-    <h1>
-        <b> Venta de carros <br /> nuevos y usados <br /> E-commerce. </b>
-    </h1>
-    <p>
-        Lider en <b>Ventas digitales</b> & <b>E-commerce</b> en Colombia. <br /> ¿Buscando un carro que se adecue a tu presuspuesto y a tus necesidades? <br /> ¡CARS!
-    </p>
-    <a href="{{url_for('login')}}"><button >Iniciar sesión</button></a>
-    <br><br><br><br>
-</main>
+{% block body_type %}
+    {{ super() }}
+{% endblock body_type %}
 
-{% endblock main %} {% block footer %} {% include 'footerModule.html' %} {% endblock footer %}
+{% block main_type %}
+{{ super() }}
+{% endblock main_type %}
 
+{% block main__content %}
+
+        <section class="hero" id="hero">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="{{ url_for('static', filename='img/slider/portrait-successful-mid-adult-doctor-with-crossed-arms.jpg') }}" class="img-fluid" alt="">
+                                    </div>
+
+                                    <div class="carousel-item">
+                                        <img src="{{ url_for('static', filename='img/slider/young-asian-female-dentist-white-coat-posing-clinic-equipment.jpg') }}" class="img-fluid" alt="">
+                                    </div>
+
+                                    <div class="carousel-item">
+                                        <img src="{{ url_for('static', filename='img/slider/doctor-s-hand-holding-stethoscope-closeup.jpg') }}" class="img-fluid" alt="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="heroText d-flex flex-column justify-content-center">
+
+                                <h1 class="mt-auto mb-2">
+                                    Mejora de
+                                    <div class="animated-info">
+                                        <span class="animated-item">sistema</span>
+                                        <span class="animated-item">turnos</span>
+                                        <span class="animated-item">control</span>
+                                    </div>
+                                </h1>
+
+                                <p class="mb-4">MediFlow es un servicio digital que le permite tener control de los turnos de su personal al alcence de la palma de su mano.</p>
+
+                                <div class="heroLinks d-flex flex-wrap align-items-center">
+                                    <a class="custom-link me-4" href="#about" data-hover="Click aquí!">Leer más...</a>
+
+                                    <p class="contact-phone mb-0"><i class="bi-phone"></i> 3024358217</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-padding" id="about">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <h2 class="mb-lg-3 mb-3">Un tip por tu salud!</h2>
+
+                            <p>Protéjase y proteja a los demás usando máscaras y lavándose las manos con frecuencia. El exterior es más seguro que el interior para reuniones o eventos. Las personas que se enferman con la enfermedad del coronavirus (COVID-19) experimentarán síntomas leves a moderados y se recuperarán sin tratamientos especiales.
+                            </p>
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-5 col-12 mx-auto">
+                            <div class="featured-circle bg-white shadow-lg d-flex justify-content-center align-items-center">
+                                <p class="featured-text"><span class="featured-number">8</span> Años<br> de experiencia.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+           
+
+            
+            <section class="section-padding pb-0" id="reviews">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <h2 class="text-center mb-lg-5 mb-4">Nuestros usuarios</h2>
+
+                            <div class="owl-carousel reviews-carousel">
+
+                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
+                                    <div class="reviews-stars">
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star"></i>
+                                    </div>
+
+                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>Gran control de turnos</strong></p>
+
+                                    <p class="reviews-text w-100">MediFlow es la mejor opción a la hora de llevar el control de tus turnos médicos.</p>
+
+                                    <img src="{{ url_for('static', filename='img/reviews/beautiful-woman-face-portrait-brown-background.jpeg') }}" class="img-fluid reviews-image" alt="">
+
+                                    <figcaption class="ms-4">
+                                        <strong>Lina</strong>
+
+                                        <span class="text-muted">Médico</span>
+                                    </figcaption>
+                                </figure>
+
+                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
+                                    <div class="reviews-stars">
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star"></i>
+                                    </div>
+
+                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>El mejor sistema!</strong></p>
+
+                                    <p class="reviews-text w-100">Con esta página web la programación y control de turnos no vuelve a ser un dolor de cabeza</p>
+
+                                    <img src="{{ url_for('static', filename='img/reviews/beautiful-woman-face-portrait-brown-background.jpeg') }}" class="img-fluid reviews-image" alt="">
+
+                                    <figcaption class="ms-4">
+                                        <strong>Jorge</strong>
+
+                                        <span class="text-muted">Encargado</span>
+                                    </figcaption>
+                                </figure>
+
+                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
+                                    <div class="reviews-stars">
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                        <i class="bi-star-fill"></i>
+                                    </div>
+
+                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>Buen servicio!</strong></p>
+
+                                    <p class="reviews-text w-100">La atención y los tiempos de respuesta con los administradores son geniales.</p>
+
+                                    <img src="{{ url_for('static', filename='img/reviews/portrait-british-woman.jpeg') }}" class="img-fluid reviews-image" alt="">
+
+                                    <figcaption class="ms-4">
+                                        <strong>Laura</strong>
+
+                                        <span class="text-muted">Nuevo usuario</span>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-padding" id="booking">
+                <div class="container">
+                    <div class="row">
+                    
+                        <div class="col-lg-8 col-12 mx-auto">
+                            <div class="booking-form">
+                                
+                                <h2 class="text-center mb-lg-3 mb-2">Contáctanos</h2>
+                            
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-6 mx-auto">
+                                        <button type="submit" class="form-control" id="submit-button">Enviar!</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    <script>
+        const buttonContact = document.getElementById("submit-button");
+
+        buttonContact.onclick = function(){
+            window.open('mailto:contactoMediFlow@mediflow.com?subject=subject&body=body');
+        };
+    </script>
+{% endblock main__content %} 
+
+{% block footer_type %} 
+{% include 'footer.html' %}
+{% endblock footer_type %}

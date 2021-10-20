@@ -23,12 +23,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-
+    {% block body_type %}{% endblock body_type %}{% block main_type %}{% endblock main_type %}
             <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
                 <div class="container">
                     <a class="navbar-brand mx-auto d-lg-none" href="index.html">
                         MediFlow
-                        <strong class="d-block">Especialistas médicos</strong>
+                        <strong class="d-block">Turnos médicos</strong>
                     </a>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,42 +38,39 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#hero">Inicio</a>
+                                <a class="nav-link" href="/#hero">Inicio</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#about">Acerca</a>
+                                <a class="nav-link" href="/#about">Acerca</a>
                             </li>
 
-                            <a class="navbar-brand d-none d-lg-block" href="index.html">
+                            <a class="navbar-brand d-none d-lg-block" href="/">
                                 MediFlow
-                                <strong class="d-block">Especialistas médicos</strong>
+                                <strong class="d-block">Turnos médicos</strong>
                             </a>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#reviews">Testimonios</a>
+                                <a class="nav-link" href="/#contact">Contacto</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#contact">Contacto</a>
+                                <a class="nav-link" href="/auth/login">Iniciar sesión</a>
                             </li>
+                            
                         </ul>
+                        
                     </div>
 
                 </div>
             </nav>
         <!-- JAVASCRIPT FILES -->
+        {% block js_scripts %}
         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}""></script>
-        <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}""></script>
-        <script src="{{ url_for('static', filename='js/scrollspy.min.js') }}""></script>
-        <script src="{{ url_for('static', filename='js/custom.js') }}""></script>
-<!--
-
-TemplateMo 566 Medic Care
-
-https://templatemo.com/tm-566-medic-care
-
--->
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/scrollspy.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+        {% endblock js_scripts %}
     </body>
 </html>
