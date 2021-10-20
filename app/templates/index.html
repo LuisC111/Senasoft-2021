@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block css %}
+<link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" type="text/css"> {% endblock css %} {% block title %} Home Page | Cars {% endblock title %} {% block header %} {% include 'headerModule.html' %} {% endblock header %} {% block main %}
+
+<main>
+    <img src="{{ url_for('static', filename='img/cars.png') }}" alt="Logo-cars" class="main-avatar" />
+    <p class="main-name">Bienvenido a Cars!</p>
+    <h1>
+        <b> Venta de carros <br /> nuevos y usados <br /> E-commerce. </b>
+    </h1>
+    <p>
+        Lider en <b>Ventas digitales</b> & <b>E-commerce</b> en Colombia. <br /> ¿Buscando un carro que se adecue a tu presuspuesto y a tus necesidades? <br /> ¡CARS!
+    </p>
+    <a href="{{url_for('login')}}"><button >Iniciar sesión</button></a>
+    <br><br><br><br>
+</main>
+
+{% endblock main %} {% block footer %} {% include 'footerModule.html' %} {% endblock footer %}
+
