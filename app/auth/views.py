@@ -1,16 +1,13 @@
 from flask import render_template, request, Response, flash, url_for, redirect
 from flask_login import login_manager, login_user, LoginManager, login_required, logout_user, current_user
 from . import auth
-from ..app import create_app
 from ..models import Usuario, db
 
-app = create_app()
 login_manager = LoginManager()
-login_manager.login_view = "login"
+login_manager.login_view = "auth.login"
 login_manager.login_message = "Tienes que iniciar primero sesion"
 login_manager.login_message_category = "error"
 
-login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -30,6 +27,7 @@ def login():
         usuarioData = Usuario.query.filter(Usuario.correoUsuario == correoUsuario, Usuario.contraseñaUsuario == passUsuario).first()
         
         if usuarioData:
+            login_user(usuarioData)
             flash('El usuario se ha logeado correctamente!', 'success')
             return redirect('/perfil')
         else:
@@ -78,4 +76,4 @@ def register():
 @auth.route('/perfil', methods=['GET', 'POST'])
 @login_required
 def perfilUsuario():
-    return render_template('register.html')
+    return render_template('perfilUsuario.html')
