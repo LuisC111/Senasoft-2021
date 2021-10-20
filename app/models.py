@@ -47,7 +47,7 @@ class Usuario(UserMixin, db.Model):
     contraseñaUsuario = db.Column(db.String(45))
     nombreUsuario = db.Column(db.String(45))
     apellidoUsuario = db.Column(db.String(45))
-         = db.Column(db.String(10))
+    telefonoUsuario = db.Column(db.String(10))
     numeroDocumento = db.Column(db.Integer)
     estadoUsuario = db.Column(db.Boolean(False))
 
