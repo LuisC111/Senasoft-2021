@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}
 {{ super() }}
- Tabla detallada
+ Tabla de usuarios
 {% endblock title %}
 {% block header_type %}
  {% include 'headerPanelUsuario.html' %}
@@ -15,31 +15,124 @@
 {% endblock main_type %}
 
 {% block main__content %}
+
+
+<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Correo electrónico</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="email" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre(s)</label>
+                        <input type="text" class="form-control" id="password" name="nombre" placeholder="Nombre" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Apellido(s)</label>
+                        <input type="text" class="form-control" id="password" name="Apellido" placeholder="Apellido" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefono</label>
+                        <input type="text" class="form-control" id="password" name="tel" placeholder="Telefono" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de documento</label>
+                       <div class="formulario__grupo-input">
+                            <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                <option selected>Selecciona un tipo de documento</option>
+                                <option value="1">Cedula de Ciudadanía</option>
+                                <option value="2">Tarjeta de identidad</option>
+                                <option value="3">Pasaporte</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Numero de documento</label>
+                        <input type="text" class="form-control" id="password" name="doc" placeholder="Documento" />
+                    </div>
+                   <div class="mb-3">
+                        <label class="form-label">Rol del usuario</label>
+                       <div class="formulario__grupo-input">
+                            <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                <option selected>Selecciona el rol del usuario</option>
+                                <option value="1">Administrador</option>
+                                <option value="2">Encargado</option>
+                                <option value="3">Enfermera</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="mb-3">
+                        <label class="form-label">Especialidad asignada</label>
+                       <div class="formulario__grupo-input">
+                            <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                <option selected>Selecciona la especialidad</option>
+                                <option value="1">Ventilado</option>
+                                <option value="2">Infante</option>
+                                <option value="3">Medicamentos</option>
+                                <option value="4">General</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-block">
+                        <button type="submit" class="btn btn-warning float-end">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Tabla detallada</p>
+                            <p class="card-title">Tabla de usuarios</p>
+                            <a href="crearUsuario"><button class="btn btn-behance">Crear usuario</button></a>
+                            <a href="#"><button class="btn btn-success float-right">Generar reporte</button><br><br></a>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <table id="usuariosTable" class="table table-striped table-bordered display expandable-table" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Turno#</th>
-                                                    <th>Nombre</th>
-                                                    <th>Apellido</th>
-                                                    <th>Fecha</th>
-                                                    <th>Hora</th>
-                                                    <th>Lugar</th>
-                                                    <th>Updated at</th>
-                                                    <th></th>
+                                                    <th># Usuario</th>
+                                                    <th>Nombre(s)</th>
+                                                    <th>Apellido(s)</th>
+                                                    <th>Correo</th>
+                                                    <th>Telefono</th>
+                                                    <th>Numero de documento</th>
+                                                    <th>Especialidad</th>
+                                                    <th>Modificar</th>
+                                                    <th>Inactivar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                {% for usuario in usuarios %}
+                                                    <tr>
+                                                        <td>{{usuario.idUsuario}}</td>
+                                                        <td>{{usuario.nombreUsuario}}</td>
+                                                        <td>{{usuario.apellidoUsuario}}</td>
+                                                        <td>{{usuario.correoUsuario}}</td>
+                                                        <td>{{usuario.telefonoUsuario}}</td>
+                                                        <td>{{usuario.numeroDocumento}}</td>
+                                                        <td>{{usuario.idEspecialidadFK}}</td>
+                                                        <td><button type="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#modalForm" style="border: none;">Editar</button></td>
+                                                        <td><a href="">Inactivar</a></td>
+                                                    </tr>    
+                                                {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -53,4 +146,4 @@
     </div>
 
 
-{% endblock main__content %} 
+{% endblock main__content %} s

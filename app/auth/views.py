@@ -3,7 +3,7 @@ from flask_login import login_manager, login_user, LoginManager, login_required,
 from . import auth
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from ..models import Usuario, db
+from ..models import Usuario, TipoUsuario, db
 from ..mailing import s
 import uuid
 
@@ -31,15 +31,19 @@ def login():
         usuarioData = Usuario.query.filter(Usuario.correoUsuario == correoUsuario, Usuario.contraseñaUsuario == passUsuario).first()
         
         if usuarioData:
-            login_user(usuarioData)
-            flash('El usuario se ha logeado correctamente!', 'success')
-            return redirect('/panel')
+            if usuarioData.estadoUsuario == 1:
+                login_user(usuarioData)
+                flash('El usuario se ha logeado correctamente!', 'success')
+                return redirect('/panel')
+            else:
+                flash('Tienes que confirmar primero tu correo electronico', 'info')
+                return redirect(url_for('auth.login'))
         else:
             flash('Error en usuario o contraseña', 'error')
 
     if current_user.is_authenticated:
         flash('Ya te encuentras logeado, si deseas utilizar otra cuenta cierra sesion primero', 'info')
-        return redirect('/auth/perfil')
+        return redirect('/panel')
     else:
         return render_template('login.html')
 
@@ -58,11 +62,11 @@ def register():
         # Busqueda en base de datos si el usuario existe
         usuarioData = Usuario.query.filter(Usuario.correoUsuario == correoUsuario).first()
 
-        if (usuarioData):
+        if usuarioData:
             flash('Este correo ya se encuentra registrado!', 'error')
         else:
             # Creacion de un nuevo usuario en caso de ser nuevo
-            newUsuario = Usuario(correoUsuario, passUsuario, nombreUsuario, apellidoUsuario, None, None, 0, None, 3, confirmationHash)
+            newUsuario = Usuario(correoUsuario, passUsuario, nombreUsuario, apellidoUsuario, None, None, 0, None, 3, confirmationHash, 4)
             db.session.add(newUsuario)
             db.session.commit()
             
@@ -84,7 +88,7 @@ def register():
 
             msg['From']= 'david@mi.com.co'
             msg['To']= str(correoUsuario)
-            msg['Subject']= "Confirm your email FLOWY"
+            msg['Subject']= "Confirm your email MediFLOW"
 
             part1 = MIMEText(text, "plain")
             part2 = MIMEText(file, "html")
@@ -94,7 +98,7 @@ def register():
 
             s.send_message(msg)
 
-            flash('El usuario se ha registrado correctamente!', 'success')
+            flash('El usuario se ha registrado correctamente! por favor confirma tu correo electronico', 'success')
             return redirect('/auth/login')
 
     if current_user.is_authenticated:
@@ -109,13 +113,13 @@ def register():
 @auth.route('/confirm/<hash>', methods=['GET', 'POST'])
 def confirmMail(hash):
     uniqueHash = hash
-    hashExist = Usuario.query.filter(Usuario.confirmationHash == hash).first()
+    hashExist = Usuario.query.filter(Usuario.confirmationHash == uniqueHash).first()
     if hashExist:
-        if hashExist.estadoUsuario == 1:
+        if hashExist.estadoUsuario != 1:
             hashExist.estadoUsuario = 1
             db.session.commit()
             flash('Has confirmado tu correo correctamente', 'success')
-            return redirect(url_for('index'))
+            return redirect(url_for('auth.login'))
         else:
             flash('Ya has confirmado anteriormente tu correo electronico', 'info')
             return redirect(url_for('index'))
@@ -180,14 +184,33 @@ def recuperarPassCode(hash):
         else:
             session['emailUsuario'] = hashExist.correoUsuario
             return render_template('formResetPassword.html')
+    else:
+        flash('Ese codigo no existe, vuelve a intentarlo', 'error')
+        return redirect(url_for('index'))
 
-@auth.route('/changePass', methods=['POST'])
+
+@auth.route('/changePass', methods=['GET', 'POST'])
 def cambiarPass():
-    passwordUsuario = request.form['passwordUser']
-    passwordUsuarioConfirm = request.form['passwordUserConfirm']
+    if request.method == 'POST':
+        passwordUsuario = request.form['passwordUser']
+        passwordUsuarioConfirm = request.form['passwordUserConfirm']
 
-   # if passwordUsuario == passwordUserConfirm:
-        
+        if passwordUsuario == passwordUsuarioConfirm:
+            usuarioMail = session['emailUsuario']
+            usuarioData = Usuario.query.filter(Usuario.correoUsuario == usuarioMail).first()
+            if usuarioData and usuarioMail:
+                usuarioData.contraseñaUsuario = passwordUsuario
+                db.session.commit()
+                flash('Se ha cambiado correctamente la contraseña', 'success')
+                return redirect(url_for('auth.login'))
+            else:
+                flash('Vuelve a enviar un correo de cambio de contraseña', 'info')
+                return redirect(url_for('recuperarPass'))
+        else:
+            flash('Las contraseñas no coinciden', 'error')
+            return redirect(url_for('auth.cambiarPass'))
+    elif request.method == 'GET':
+        return redirect(url_for('index'))
 
 # Cerrar sesion
 @auth.route('/logout', methods=['GET', 'POST'])

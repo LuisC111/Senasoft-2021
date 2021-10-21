@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}
 {{ super() }}
- Editar perfil
+ Crear usuario
 {% endblock title %}
 {% block header_type %}
  {% include 'headerPanelUsuario.html' %}
@@ -20,8 +20,8 @@
     <div class="content-wrapper">
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <span class="text-uppercase page-subtitle">Modificar</span></span>
-                <h3 class="page-title">Editar perfil</h3>
+                <span class="text-uppercase page-subtitle">Creación</span></span>
+                <h3 class="page-title">Crear Paciente</h3>
             </div>
         </div>
         <!-- End Page Header -->
@@ -34,9 +34,9 @@
                             <div class="mb-3 mx-auto">
                                 <img class="rounded-circle" src="{{ url_for('static', filename='img/user.jpg') }}" alt="User Avatar" width="110">
                             </div>
-                            <h4 class="mb-0">Nombre del usuario: {{ userLogged.nombreUsuario}}</h4>
-                            <span class="text-muted d-block mb-2">Correo del usuario: {{ userLogged.correoUsuario}}</span>
-                            <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primaryy mr-2">{% if userLogged.idTipoUsuarioFK == '1' %} Administrador {% elif userLogged.idTipoUsuarioFK == '2' %} Encargados {% else %} Medico {% endif %}</button>
+                            <h4 class="mb-0">Nombre del paciente{{NombreUsuario}}</h4>
+                            <span class="text-muted d-block mb-2">Apellido del paciente {{CorreoUsuario}}</span>
+                            <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primaryy mr-2">Médico</button>
                         </center>
                     </div>
                     <ul class="list-group list-group-flush">
@@ -68,7 +68,7 @@
                                                 <div class="formulario__grupo" id="grupo__nombreUsuario">
                                                     <label for="nombreUsuario" class="text-primary">Nombre(s)</label>
                                                     <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Juan Camilo" value="{{ userLogged.nombreUsuario }}" required>
+                                                        <input type="text" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Juan Camilo" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,7 +76,7 @@
                                                 <div class="formulario__grupo" id="grupo__apellidoUsuario">
                                                     <label for="apellidoUsuario" class="text-primary">Apellido(s)</label>
                                                     <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="apellidoUsuario" id="apellidoUsuario" placeholder="Garzón Medina" value="{{ userLogged.apellidoUsuario }}" required>
+                                                        <input type="text" class="form-control" name="apellidoUsuario" id="apellidoUsuario" placeholder="Garzón Medina" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,36 +84,65 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <div class="formulario__grupo" id="grupo__correoUsuario">
-                                                    <label for="correoUsuario" class="text-primary">Correo electrónico</label>
+                                                    <label for="correoUsuario" class="text-primary">Documento del paciente</label>
                                                     <div class="formulario__grupo-input">
-                                                        <input type="email" class="form-control" name="correoUsuario" id="correoUsuario" placeholder="juan@gmail.com" value="{{ userLogged.correoUsuario }}" required>
+                                                        <input type="email" class="form-control" name="correoUsuario" id="correoUsuario" placeholder="juan@gmail.com" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__fechaNacimiento">
-                                                    <label for="datTelefono" class="text-primary">Telefono</label>
-                                                    <div class="formulario__grupo-input">
-                                                        <input type="tel" class="form-control" name="datTelefono" id="datTelefono" placeholder="07/15/2002" value="{{ userLogged.telefonoUsuario }}" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__fechaNacimiento">
+                                                    <label for="feInputAddress" class="text-primary">Telefono</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="text" class="form-control" name="telefonoUsuario" id="telefono" placeholder="3100000000" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__fechaNacimiento">
+                                                    <label for="feInputAddress" class="text-primary">Edad</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="text" class="form-control" name="telefonoUsuario" id="telefono" placeholder="31" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__documentoUsuario">
+                                                    <label for="feInputCity" class="text-primary">Especialidad de paciente</label>
+                                                    <div class="formulario__grupo-input">
+                                                    <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                                        <option selected>Selecciona una especialidad</option>
+                                                        <option value="1">Ventilado</option>
+                                                        <option value="2">Infante</option>
+                                                        <option value="3">Medicamentos</option>
+                                                        <option value="4">General</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                             <div class="form-group col-md-6">
                                                 <div class="formulario__grupo" id="grupo__documentoUsuario">
                                                     <label for="feInputCity" class="text-primary">Número de documento</label>
                                                     <div class="formulario__grupo-input">
-                                                        <input type="number" class="form-control" name="documentoUsuario" id="documentoUsuario" value="{{ userLogged.numeroDocumento }}" required>
+                                                        <input type="number" class="form-control" name="documentoUsuario" id="documentoUsuario" placeholder="1016757835" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                
-                                            </div>
+
+                                              
+
+                                        </div>
+
+                                       
+
+
+                                            
                                         </div>
                                                                    
-                </div>
+                                        </div>
                                         </div>
                                         <br><button type="submit" class="btn btn-primary mr-2" style="float: right;">Actualizar Datos</button>
                                     </form>
@@ -124,7 +153,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 
   <script src="../static/js/formModificacionUsuarios.js"></script>

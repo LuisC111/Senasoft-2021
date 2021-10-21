@@ -25,17 +25,43 @@ class Task(db.Model):
     descTurno = db.Column(db.String(255))
     horaInicio = db.Column(db.DateTime)
     horaFin = db.Column(db.DateTime)
+    urlReunion = db.Column(db.String(255))
 
     # Relaciones entre tablas
     idUsuarioFK = db.Column(db.Integer, db.ForeignKey('Usuario.idUsuario')) 
-
+    idPacienteFK = db.Column(db.Integer, db.ForeignKey('Paciente.idPaciente'))
     # Definición de las relaciones 
-    def __init__(self, nombreTask, descTurno, horaInicio, horaFin, idUsuarioFK):
+    def __init__(self, nombreTask, descTurno, horaInicio, horaFin, urlReunion, idUsuarioFK,idPacienteFK):
         self.nombreTask = nombreTask
         self.descTurno = descTurno
         self.horaInicio = horaInicio
         self.horaFin = horaFin
+        self.urlReunion = urlReunion
         self.idUsuarioFK = idUsuarioFK
+        self.idPacienteFK = idPacienteFK
+
+class Paciente(db.Model):
+    # Creación de la tabla Usuario
+    __tablename__ = 'Paciente'
+    # Declaración de columnas con sus respectivos tipos de dato
+    idPaciente = db.Column(db.Integer, primary_key=True)
+    nombrePaciente = db.Column(db.String(45))
+    apellidoPaciente = db.Column(db.String(255))
+    documentoPaciente = db.Column(db.String(45))
+    telefonoPaciente = db.Column(db.String(45))
+    edadPaciente = db.Column(db.Integer)
+    # Relaciones entre tablas
+    idEspecialidadFK = db.Column(db.Integer, db.ForeignKey('Especialidad.idEspecialidad'))
+    task = db.relationship('Task')
+
+    # Definición de las relaciones 
+    def __init__(self, nombrePaciente, apellidoPaciente, documentoPaciente, telefonoPaciente, edadPaciente, idEspecialidadFK):
+        self.nombrePaciente = nombrePaciente
+        self.apellidoPaciente = apellidoPaciente
+        self.documentoPaciente = documentoPaciente
+        self.telefonoPaciente = telefonoPaciente
+        self.edadPaciente = edadPaciente
+        self.idEspecialidadFK = idEspecialidadFK
 
 # Definición de la clase Usuario mediante SQLAlchemy
 class Usuario(UserMixin, db.Model):
@@ -43,26 +69,26 @@ class Usuario(UserMixin, db.Model):
     __tablename__ = 'Usuario'
     # Declaración de columnas con sus respectivos tipos de dato
     idUsuario = db.Column(db.Integer, primary_key=True)
-    correoUsuario = db.Column(db.String(45))
+    correoUsuario = db.Column(db.String(45), unique=True)
     contraseñaUsuario = db.Column(db.String(45))
     nombreUsuario = db.Column(db.String(45))
     apellidoUsuario = db.Column(db.String(45))
     telefonoUsuario = db.Column(db.String(10))
-    numeroDocumento = db.Column(db.Integer)
+    numeroDocumento = db.Column(db.String(15))
     estadoUsuario = db.Column(db.Boolean(False))
     confirmationHash = db.Column(db.String(50))
 
     # Relaciones entre tablas
     idTipoDocumentoFK = db.Column(db.Integer, db.ForeignKey('TipoDocumento.idTipoDocumento'))
     idTipoUsuarioFK = db.Column(db.Integer, db.ForeignKey('TipoUsuario.idTipoUsuario'))
-    especialidad_usuario = db.relationship('EspecialidadUsuario', back_populates="usuario")
+    idEspecialidadFK = db.Column(db.Integer, db.ForeignKey('Especialidad.idEspecialidad'))
     task = db.relationship('Task')
 
     def get_id(self):
         return (self.idUsuario)
 
     # Definición de las relaciones 
-    def __init__(self, correoUsuario, contraseñaUsuario, nombreUsuario, apellidoUsuario, telefonoUsuario, numeroDocumento, estadoUsuario, idTipoDocumentoFK, idTipoUsuarioFK, confirmationHash):
+    def __init__(self, correoUsuario, contraseñaUsuario, nombreUsuario, apellidoUsuario, telefonoUsuario, numeroDocumento, estadoUsuario, idTipoDocumentoFK, idTipoUsuarioFK, confirmationHash, idEspecialidadFK):
         self.correoUsuario = correoUsuario
         self.contraseñaUsuario = contraseñaUsuario
         self.nombreUsuario = nombreUsuario
@@ -73,7 +99,7 @@ class Usuario(UserMixin, db.Model):
         self.idTipoDocumentoFK = idTipoDocumentoFK
         self.idTipoUsuarioFK = idTipoUsuarioFK
         self.confirmationHash = confirmationHash
-
+        self.idEspecialidadFK = idEspecialidadFK
 # Definición de la clase TipoDocumento mediante SQLAlchemy
 class TipoDocumento(db.Model):
     # Creacion de la tabla TipoDocumento
@@ -97,32 +123,9 @@ class Especialidad(db.Model):
     nombreEspecialidad = db.Column(db.String(45))
 
     # Relaciones entre tablas
-    especialidad_usuario = db.relationship('EspecialidadUsuario', back_populates="especialidad")
+    usuario = db.relationship('Usuario')
+    paciente = db.relationship('Paciente')
 
     # Definición de las relaciones 
     def __init__(self, nombreEspecialidad):
         self.nombreEspecialidad = nombreEspecialidad
-
-class EspecialidadUsuario(db.Model):
-    # Creación de la tabla Usuario
-    __tablename__ = 'EspecialidadUsuario'
-    # Declaración de columnas con sus respectivos tipos de dato
-    idUsuario = db.Column(db.Integer, db.ForeignKey('Usuario.idUsuario'), primary_key=True)
-    idEspecialidad = db.Column(db.Integer, db.ForeignKey('Especialidad.idEspecialidad'), primary_key=True)
-    descEspecialidad  = db.Column(db.String(255))
-
-    # Relaciones entre tablas
-    usuario = db.relationship('Usuario', back_populates="especialidad_usuario")
-    especialidad = db.relationship('Especialidad', back_populates = "especialidad_usuario")
-
-    # Definición de las relaciones 
-    def __init__(self, idUsuario, idEspecialidad, descEspecialidad):
-        self.idUsuario = idUsuario
-        self.idEspecialidad = idEspecialidad
-        self.descEspecialidad = descEspecialidad
-
-
-
-
-
-        

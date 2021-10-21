@@ -93,7 +93,8 @@
               </a>
             </div>
           </li>
-        <li class="nav-item"><a href="editarPerfil" style="color:green; text-decoration:none">Editar perfil</a></li>
+          
+        <li class="nav-item"><a href="editarPerfil/{{userLogged.idUsuario}}" style="color:green; text-decoration:none">Editar perfil</a></li>
 
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
@@ -186,7 +187,9 @@
         </div>
         </div>
 
+      {% set usuarioRol = userLogged.idTipoUsuarioFK %}
 
+      {% if usuarioRol == 1 %}
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
@@ -197,19 +200,89 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/panel/calendar">
-              <i class="icon-layout menu-icon"></i>
+              <i class="ti-calendar menu-icon"></i>
               <span class="menu-title">Calendario</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/panel/usuarios">
-              <i class="icon-layout menu-icon"></i>
-              <span class="menu-title">Tabla detallada</span>
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">Usuarios</span>
             </a>
           </li>
-          
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/turnos">
+              <i class="ti-ticket menu-icon"></i>
+              <span class="menu-title">Turnos</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/especialidades">
+              <i class="ti-heart-broken  menu-icon"></i>
+              <span class="menu-title">Especialidades</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/paciente">
+              <i class="ti-wheelchair  menu-icon"></i>
+              <span class="menu-title">Pacientes</span>
+            </a>
+          </li>
+
+    
         </ul>
       </nav>
+      {% endif %}
+      {% if usuarioRol == 2 %}
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/panel">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Página principal</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/calendar">
+              <i class="ti-calendar menu-icon"></i>
+              <span class="menu-title">Calendario</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/turnos">
+              <i class="ti-ticket menu-icon"></i>
+              <span class="menu-title">Turnos</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      {% endif %}
+      {% if usuarioRol == 3 %}
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/panel">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Página principal</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/calendar">
+              <i class="ti-calendar menu-icon"></i>
+              <span class="menu-title">Calendario</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/turnos">
+              <i class="ti-ticket menu-icon"></i>
+              <span class="menu-title">Turnos</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      {% endif %}
 
     {% block js_scripts %}
       <!-- Plugin js for this page -->
