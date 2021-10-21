@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ super() }}
+ Editar perfil
+{% endblock title %}
+{% block header_type %}
+ {% include 'headerPanelUsuario.html' %}
+{% endblock header_type %}
+
+{% block body_type %}
+{% endblock body_type %}
+
+{% block main_type %}
+{{ super() }}
+{% endblock main_type %}
+
+{% block main__content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <span class="text-uppercase page-subtitle">Modificar</span></span>
+                <h3 class="page-title">Editar perfil</h3>
+            </div>
+        </div>
+        <!-- End Page Header -->
+        <!-- Default Light Table -->
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card card-small mb-4 pt-3">
+                    <div class="card-header border-bottom text-center">
+                        <center>
+                            <div class="mb-3 mx-auto">
+                                <img class="rounded-circle" src="{{ url_for('static', filename='img/user.jpg') }}" alt="User Avatar" width="110">
+                            </div>
+                            <h4 class="mb-0">Nombre del usuario{{NombreUsuario}}</h4>
+                            <span class="text-muted d-block mb-2">Correo del usuario {{CorreoUsuario}}</span>
+                            <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primaryy mr-2">Médico</button>
+                        </center>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-4">
+                            <div class="progress-wrapper">
+                                <strong class="text-muted d-block mb-2">Completa tu perfil</strong>
+                                <progress max="100" value="0" id="progress" style="width: 100%;"></progress>
+                                <div class="progress-message text-primary" id="progress-message">Vamos a empezar.</div>
+                        </li>
+                        <li class="list-group-item p-4">
+                            <strong class="text-muted d-block mb-2">Descripción</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card card-small mb-4">
+                    <div class="card-header border-bottom">
+                        <h6 class="m-0">Detalles del Perfil</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item p-3">
+                            <div class="row">
+                                <div class="col">
+                                    <form action="" method="POST" class="pro-form" id="pro-form" value="" enctype="multipart/form-data">
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__nombreUsuario">
+                                                    <label for="nombreUsuario" class="text-primary">Nombre(s)</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="text" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Juan Camilo" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__apellidoUsuario">
+                                                    <label for="apellidoUsuario" class="text-primary">Apellido(s)</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="text" class="form-control" name="apellidoUsuario" id="apellidoUsuario" placeholder="Garzón Medina" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__correoUsuario">
+                                                    <label for="correoUsuario" class="text-primary">Correo electrónico</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="email" class="form-control" name="correoUsuario" id="correoUsuario" placeholder="juan@gmail.com" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__contraseñaUsuario">
+                                                    <label for="fePassword" class="text-primary">Contraseña</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="password" class="form-control" name="contraseñaUsuario" id="contraseñaUsuario" placeholder="*******" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__fechaNacimiento">
+                                                    <label for="feInputAddress" class="text-primary">Telefono</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="text" class="form-control" name="fechaNacimiento" id="fechaNacimiento" placeholder="07/15/2002" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__documentoUsuario">
+                                                    <label for="feInputCity" class="text-primary">Número de documento</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="number" class="form-control" name="documentoUsuario" id="documentoUsuario" placeholder="1016757835" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                                   
+                </div>
+                                        </div>
+                                        <br><button type="submit" class="btn btn-primary mr-2" style="float: right;">Actualizar Datos</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <script src="../static/js/formModificacionUsuarios.js"></script>
+
+{% endblock main__content %} 

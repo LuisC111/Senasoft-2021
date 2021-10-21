@@ -194,5 +194,6 @@ def cambiarPass():
 @login_required
 def logout():
     logout_user()
+    flash('Su sesion se ha cerrado correctamente!', 'success')
     return redirect(url_for('auth.login'))
 

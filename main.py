@@ -8,7 +8,7 @@ app = create_app()
 def index():
     return render_template('index.html')
 
-@app.route('/test')
-def test():
-    return render_template('formForgotPassword.html')
+@app.route('/404')
+def error():
+    return render_template('404.html')
 

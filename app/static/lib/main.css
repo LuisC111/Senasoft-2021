@@ -57,8 +57,8 @@
 }
 .fc-theme-standard td,
   .fc-theme-standard th {
-    border: 1px solid #ddd;
-    border: 1px solid var(--fc-border-color, #ddd);
+    border: 1px solid #2C3E50;
+    border: 1px solid var(--fc-border-color, #2C3E50);
   }
 /* for FF, which doesn't expand a 100% div within a table cell. use absolute positioning */
 /* inner-wrappers are responsible for being absolute */
@@ -198,16 +198,16 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 
 }
 .fc .fc-button-primary {
-    color: #fff;
-    color: var(--fc-button-text-color, #fff);
+    color: #2C3E50;
+    color: var(--fc-button-text-color, #2C3E50);
     background-color: #2C3E50;
     background-color: var(--fc-button-bg-color, #2C3E50);
     border-color: #2C3E50;
     border-color: var(--fc-button-border-color, #2C3E50);
   }
 .fc .fc-button-primary:hover {
-    color: #fff;
-    color: var(--fc-button-text-color, #fff);
+    color: #2C3E50;
+    color: var(--fc-button-text-color, #2C3E50);
     background-color: #1e2b37;
     background-color: var(--fc-button-hover-bg-color, #1e2b37);
     border-color: #1a252f;
@@ -215,7 +215,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   }
 .fc .fc-button-primary:disabled { /* not DRY */
     color: #fff;
-    color: var(--fc-button-text-color, #fff);
+    color: var(--fc-button-text-color, #2C3E50);
     background-color: #2C3E50;
     background-color: var(--fc-button-bg-color, #2C3E50);
     border-color: #2C3E50;
@@ -333,8 +333,8 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
     direction: rtl;
   }
 .fc-theme-standard .fc-scrollgrid {
-    border: 1px solid #ddd;
-    border: 1px solid var(--fc-border-color, #ddd); /* bootstrap does this. match */
+    border: 1px solid #2C3E50;
+    border: 1px solid var(--fc-border-color, #2C3E50); /* bootstrap does this. match */
   }
 .fc .fc-scrollgrid,
     .fc .fc-scrollgrid table { /* all tables (self included) */
@@ -389,8 +389,8 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 
 }
 .fc .fc-scrollgrid-section-sticky > * {
-    background: #fff;
-    background: var(--fc-page-bg-color, #fff);
+    background: #2C3E50;
+    background: var(--fc-page-bg-color, #2C3E50);
     position: sticky;
     z-index: 3; /* TODO: var */
     /* TODO: box-shadow when sticking */
@@ -515,8 +515,8 @@ a.fc-event:hover {
     height: var(--fc-event-resizer-dot-total-width, 8px);
     border-style: solid;
     border-color: inherit;
-    background: #fff;
-    background: var(--fc-page-bg-color, #fff)
+    background: #2C3E50;
+    background: var(--fc-page-bg-color, #2C3E50)
 
     /* expand hit area */
 

@@ -6,17 +6,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- plugins:css -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/feather/feather.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/ti-icons/css/themify-icons.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/css/vendor.bundle.base.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendors/feather/feather.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendors/ti-icons/css/themify-icons.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendors/css/vendor.bundle.base.css') }}">
   <!-- endinject -->
   <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/ti-icons/css/themify-icons.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendors/ti-icons/css/themify-icons.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='js/select.dataTables.min.css') }}">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/vertical-layout-light/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vertical-layout-light/style.css') }}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/icon_MediFlow.png') }}">
 </head>
@@ -40,7 +40,7 @@
                   <i class="icon-search"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Escribe algo para buscar..." aria-label="search" aria-describedby="search">
             </div>
           </li>
         </ul>
@@ -51,7 +51,7 @@
               <span class="count"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notificaciones</p>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-success">
@@ -59,9 +59,9 @@
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <h6 class="preview-subject font-weight-normal">Error en el sistema</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    Just now
+                    Justo ahora
                   </p>
                 </div>
               </a>
@@ -72,9 +72,9 @@
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <h6 class="preview-subject font-weight-normal">Configuración</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    Private message
+                    Mensaje privado
                   </p>
                 </div>
               </a>
@@ -85,29 +85,32 @@
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <h6 class="preview-subject font-weight-normal">Nuevo usuario registrado</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    2 days ago
+                    Hace 2 días
                   </p>
                 </div>
               </a>
             </div>
           </li>
+        <li class="nav-item"><a href="editarPerfil" style="color:green; text-decoration:none">Editar perfil</a></li>
+
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="images/faces/face28.jpg" alt="profile"/>
+              <img src="{{ url_for('static', filename='img/user.jpg') }}" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
                 <i class="ti-settings text-primary"></i>
-                Settings
+                Configuración
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="{{url_for('auth.logout')}}">
                 <i class="ti-power-off text-primary"></i>
-                Logout
-              </a>
+                    Cerrar sesión
+                </a>
             </div>
           </li>
+          <li class="nav-item"><a href="{{url_for('auth.logout')}}" style="color:red; text-decoration:none">Cerrar Sesión</a></li>
           <li class="nav-item nav-settings d-none d-lg-flex">
             <a class="nav-link" href="#">
               <i class="icon-ellipsis"></i>
@@ -119,6 +122,94 @@
         </button>
       </div>
     </nav>
+
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">COLOR DE BARRA LATERAL</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Claro</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Oscuro</div>
+          <p class="settings-heading mt-2">COLOR DE CABECERA</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+        <div id="right-sidebar" class="settings-panel">
+            <i class="settings-close ti-close"></i>
+            <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TAREAS PENDIENTES</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="setting-content">
+                <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+                    <div class="add-items d-flex px-3 mb-0">
+                        <form class="form w-100">
+                            <div class="form-group d-flex">
+                            <input type="text" class="form-control todo-list-input" placeholder="Escribe un pendiente...">
+                            <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Agregar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="list-wrapper px-3">
+                        <ul class="d-flex flex-column-reverse todo-list">
+                            <li class="completed">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    <input class="checkbox" type="checkbox" checked>
+                                    Nueva dashboard
+                                    </label>
+                                </div>
+                                <i class="remove ti-close"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    <h4 class="px-3 text-muted mt-5 font-weight-light mb-0">Eventos</h4>
+                    <div class="events pt-4 px-3">
+                        <div class="wrapper d-flex mb-2">
+                            <i class="ti-control-record text-primary mr-2"></i>
+                            <span>Oct 22 2021</span>
+                        </div>
+                    <p class="mb-0 font-weight-thin text-gray">Presentación total de</p>
+                    <p class="text-gray mb-0">MediFlow</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/panel">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Página principal</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/calendar">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Calendario</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/panel/usuarios">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Tabla detallada</span>
+            </a>
+          </li>
+          
+        </ul>
+      </nav>
 
     {% block js_scripts %}
       <!-- Plugin js for this page -->
