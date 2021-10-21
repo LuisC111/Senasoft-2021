@@ -1,90 +1,159 @@
-{% extends 'base.html' %}
-{% block title %}
-{{ super() }}
- Calendario de turnos
-{% endblock title %}
-{% block header_type %}
- {% include 'headerPanelUsuario.html' %}
-{% endblock header_type %}
+{% extends 'base.html' %} {% block title %} {{ super() }} Calendario de turnos
+{% endblock title %} {% block header_type %} {% include
+'headerPanelUsuario.html' %} {% endblock header_type %} {% block body_type %} {%
+endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
+%} {% block main__content %}
+<div class="main-panel">
+  <div class="content-wrapper">
 
-{% block body_type %}
-{% endblock body_type %}
+    <select class="form-select col-md-3" aria-label="Default select example" style="margin-left: 240px; margin-bottom: -40px;">
+      <option selected>Selecciona un usuario</option>
+      <option value="1">Test</option>
+    </select>
 
-{% block main_type %}
-{{ super() }}
-{% endblock main_type %}
+    <a href="#"><button class="btn btn-success" style="margin-left: 1200px">
+        Generar reporte</button><br /><br/></a>
 
-{% block main__content %}
-    <div class="main-panel">
-      <div class="content-wrapper">
-        <div id='calendar' style='width: 100%;'></div>
+    <div id="calendar" style="width: 100%"></div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form>
+                  <div class="mb-3">
+                      <label class="form-label">Correo electrónico</label>
+                      <input type="text" class="form-control" id="username" name="username" placeholder="email" />
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Nombre(s)</label>
+                      <input type="text" class="form-control" id="password" name="nombre" placeholder="Nombre" />
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Apellido(s)</label>
+                      <input type="text" class="form-control" id="password" name="Apellido" placeholder="Apellido" />
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Telefono</label>
+                      <input type="text" class="form-control" id="password" name="tel" placeholder="Telefono" />
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Tipo de documento</label>
+                     <div class="formulario__grupo-input">
+                          <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                              <option selected>Selecciona un tipo de documento</option>
+                              <option value="1">Cedula de Ciudadanía</option>
+                              <option value="2">Tarjeta de identidad</option>
+                              <option value="3">Pasaporte</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Numero de documento</label>
+                      <input type="text" class="form-control" id="password" name="doc" placeholder="Documento" />
+                  </div>
+                 <div class="mb-3">
+                      <label class="form-label">Rol del usuario</label>
+                     <div class="formulario__grupo-input">
+                          <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                              <option selected>Selecciona el rol del usuario</option>
+                              <option value="1">Administrador</option>
+                              <option value="2">Encargado</option>
+                              <option value="3">Enfermera</option>
+                          </select>
+                      </div>
+                  </div>
+                   <div class="mb-3">
+                      <label class="form-label">Especialidad asignada</label>
+                     <div class="formulario__grupo-input">
+                          <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                              <option selected>Selecciona la especialidad</option>
+                              <option value="1">Ventilado</option>
+                              <option value="2">Infante</option>
+                              <option value="3">Medicamentos</option>
+                              <option value="4">General</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="modal-footer d-block">
+                      <button type="submit" class="btn btn-warning float-end">Actualizar</button>
+                  </div>
+              </form>
+          </div>
       </div>
-    </div>
+  </div>
+</div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-    
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          headerToolbar: {
-            left: 'prev,next,today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-          },
-          initialDate: '2021-10-22',
-          navLinks: true, // can click day/week names to navigate views
-          selectable: true,
-          selectMirror: true,
-          select: function(arg) {
-            var title = prompt('Titulo del turno:');
-            if (title) {
-              calendar.addEvent({
-                title: title,
-                start: arg.start,
-                end: arg.end,
-                allDay: arg.allDay
-              })
-            }
-            calendar.unselect()
-          },
-          eventClick: function(arg) {
-            if (confirm('¿Estas seguro de que deseas borrar este turno?')) {
-              arg.event.remove()
-            }
-          },
-          editable: true,
-          dayMaxEvents: true, // allow "more" link when too many events
-          events: [
-            {
-              title: 'Turno de todo el día',
-              start: '2021-10-22'
-            },
-            {
-              title: 'Turno largo',
-              start: '2021-10-20',
-              end: '2021-10-20'
-            },
-            {
-              groupId: 999,
-              title: 'Turno largo',
-              start: '2021-10-21T16:00:00'
-            },
-            {
-              title: 'Turno de todo el día',
-              start: '2021-10-22T07:00:00'
-            },
-            {
-              title: 'Click para ir a Google',
-              url: 'http://google.com/',
-              start: '2021-10-22'
-            }
-          ]
-        });
-    
-        calendar.render();
-      });
-    </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var calendarEl = document.getElementById("calendar");
+    var today = new Date();
+    var date =  today.getFullYear()+"-"+(today.getMonth() + 1)+"-"+today.getDate();
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      timeZone: "local",
+      headerToolbar: {
+        left: "prev,next,today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay",
+      },
+      initialDate: date,
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      selectMirror: true,
+      select: function (arg) {
+        $('#modalForm').modal('show'); 
+        if (title) {
+          calendar.addEvent({
+            title: title,
+            start: arg.start,
+            end: arg. end,
+            allDay: arg.allDay,
+          });
+        }
+        calendar.unselect();
+      },
+      eventClick: function (arg) {
+        if (confirm("¿Estas seguro de que deseas borrar este turno?")) {
+          arg.event.remove();
+        }
+      },
+      editable: true,
+      dayMaxEvents: true, // allow "more" link when too many events
+      events: [
+        {
+          title: "Turno de todo el día",
+          start: "2021-10-22",
+        },
+        {
+          title: "Turno largo",
+          start: "2021-10-20",
+          end: "2021-10-20",
+        },
+        {
+          groupId: 999,
+          title: "Turno largo",
+          start: "2021-10-21T16:00:00",
+        },
+        {
+          title: "Turno de todo el día",
+          start: "2021-10-22T07:00:00",
+        },
+        {
+          title: "Click para ir a Google",
+          url: "http://google.com/",
+          start: "2021-10-22",
+        },
+      ],
+    });
 
+    calendar.render();
+  });
+</script>
 
-{% endblock main__content %} 
-
+{% endblock main__content %}
