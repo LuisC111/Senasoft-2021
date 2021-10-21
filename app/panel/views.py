@@ -3,6 +3,10 @@ from . import panel
 
 @panel.route('/')
 def panelInicio():
+    return render_template('panelUsuario.html')
+
+@panel.route('/calendar')
+def panelCalendar():
     return render_template('panelCalendar.html')
 
 @panel.route('/usuarios')

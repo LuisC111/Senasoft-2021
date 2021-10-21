@@ -33,7 +33,7 @@ def login():
         if usuarioData:
             login_user(usuarioData)
             flash('El usuario se ha logeado correctamente!', 'success')
-            return redirect('/perfil')
+            return redirect('/panel')
         else:
             flash('Error en usuario o contraseña', 'error')
 
@@ -186,7 +186,8 @@ def cambiarPass():
     passwordUsuario = request.form['passwordUser']
     passwordUsuarioConfirm = request.form['passwordUserConfirm']
 
-    
+   # if passwordUsuario == passwordUserConfirm:
+        
 
 # Cerrar sesion
 @auth.route('/logout', methods=['GET', 'POST'])
@@ -194,3 +195,4 @@ def cambiarPass():
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
