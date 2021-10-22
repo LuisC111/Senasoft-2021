@@ -67,10 +67,6 @@
         console.log(div)
 
         fechaFin.value = div
-
-
-        
-
     }
 
     function createCalendar(item) {
@@ -102,7 +98,10 @@
                         '<input type="text" id="swal-input1" name="nombreTask" class="swal2-input" placeholder="Nombre del turno">' +
                         '<label class="float-left">Fecha de inicio</label>' +
                         `<input type="datetime-local" id="swal-input3" name="fechaInicio" class="swal2-input" onchange='calcularFin()' placeholder="Fecha Inicio">` +
+                        '<label class="float-left">Paciente</label>' +
+                        `<input type="number" id="swal-input3" name="idPaciente" class="swal2-input" onchange='calcularFin()' placeholder="Paciente">` +
                         '<input type="hidden" id="swal-input2" name="fechaFin" class="swal2-input" placeholder="Fecha Inicio">' +
+                        '<br>'+
                         `<button class="btn btn-primary" onclick="sumDateTime()">Crear</button>` +
                         '</form>',
                     type: "warning",
@@ -170,7 +169,7 @@
                                 '</form>',
                             type: "warning",
                             showCancelButton: true,
-                            confirmButtonText: "Eliminar!",
+                            confirmButtonText: "Editar!",
                             showConfirmButton: false,
                             closeOnConfirm: false,
                             closeModal: false,

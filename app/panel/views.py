@@ -95,7 +95,8 @@ def panelCalendarNuevo(idUsuario):
         describcionTaks = "prueba"
         fechaInicio = request.form['fechaInicio']
         fechaFin = request.form['fechaFin']
-        newTask = Task(nombreTask, describcionTaks, fechaInicio, fechaFin, None, idUsuario, 2)
+        pacienteId = request.form['idPaciente']
+        newTask = Task(nombreTask, describcionTaks, fechaInicio, fechaFin, None, idUsuario, int(pacienteId))
         # nombreTask, descTurno, horaInicio, horaFin, urlReunion, idUsuarioFK,idPacienteFK
 
         db.session.add(newTask)
@@ -159,7 +160,7 @@ def panelCalendarEditar(idCalendar):
         return redirect(url_for('panel.panelCalendarUsuario', idUsuario=idUsuarioActual))
 
 @panel.route('/usuarios')
-#@admin_required
+@admin_required
 @login_required
 def panelUsuarios():
     all_data = Usuario.query.filter(Usuario.estadoUsuario == 1).all()
@@ -173,6 +174,7 @@ def panelUsuarios():
     return render_template('datatablesPanelUsuario.html', **context)
 
 @panel.route('usuarios/crearUsuario', methods=['GET', 'POST'])
+@admin_required
 @login_required
 def panelCrearUsuario():
     context = {
@@ -220,6 +222,7 @@ def panelCrearUsuario():
     return render_template('crearUsuario.html', **context)
 
 @panel.route('/usuarios/inactivar/<int:idUsuario>', methods=['GET', 'POST'])
+@admin_required
 @login_required
 def inactivarUsuario(idUsuario):
     usuarioIdURL = idUsuario
@@ -240,6 +243,7 @@ def inactivarUsuario(idUsuario):
         return redirect(url_for('panel.panelUsuarios'))
 
 @panel.route('/usuarios/editarUsuario/<int:idUsuario>', methods=['GET', 'POST'])
+@admin_required
 @login_required
 def editarUsuario(idUsuario):
     all_data = Usuario.query.filter(Usuario.estadoUsuario == 1).all()
@@ -390,13 +394,14 @@ def inactivarPacientePanel(idPaciente):
 def panelTurnos():
     all_data = Task.query.all()
     all_Usuario = Usuario.query.all()
-    all_Paciente = Paciente.query.all() 
+    all_Paciente = Paciente.query.all()
+
     context = {
         'nombreUsuario' : current_user.nombreUsuario,
         'userLogged' : current_user,
         'turnos' : all_data,
         'usuarios' : all_Usuario,
-        'pacientes' : all_Paciente
+        'pacientes' : all_Paciente,
     }
 
     return render_template('datatablesPanelTurnos.html', **context )

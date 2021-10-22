@@ -58,12 +58,14 @@ class Task(db.Model):
            'descTurno': self.descTurno,
            'horaInicio': dump_datetime(self.horaInicio),
            'horaFin': dump_datetime(self.horaFin),
+           'idPacienteFK' : self.idPacienteFK,
            'urlReunion': self.urlReunion,
        }
 
 class TaskSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Task
+        include_fk = True
 
 class Paciente(db.Model):
     # Creación de la tabla Usuario
