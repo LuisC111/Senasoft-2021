@@ -51,18 +51,25 @@
         let fechaInicio = fechaI.value;
         
         console.log(fechaI.value)
-        let separador = "T"
-        var resultado = fechaI.value.split(separador);
-        var d = new Date(fechaI.value);
-        console.log('Before:\t', d.toLocaleString('en-US',{ hour12: false }))
 
-          // Add 1 hour to datetime
-  d.setHours(d.getHours() + 12);
+        var d = new Date(fechaI.value);
+        
+        d.setHours(d.getHours() + 12);
+
+        var e = moment(new Date(d.toLocaleString('en-US',{ hour12: false }))).format()
   
-  console.log('After:\t', d.toLocaleString('en-US',{ hour12: false }))
+        console.log('After:\t', d.toLocaleString('en-US',{ hour12: false }))
+
+        let fechaFin = document.querySelector('#swal-input2') 
+        let str = ""
+        str = e
+        let div = str.slice(0,19)
+        console.log(div)
+
+        fechaFin.value = div
+
 
         
-        console.log(DateTime.fromFormat(d.toLocaleString('en-US',{ hour12: false }), "D hh:mm:ss.SSS a").toISO())
 
     }
 
@@ -94,8 +101,8 @@
                         '<input type="hidden" id="swal-input1" name="idUsuario" class="swal2-input" value="{{ enfermeraSeleccionada }}">' +
                         '<input type="text" id="swal-input1" name="nombreTask" class="swal2-input" placeholder="Nombre del turno">' +
                         '<label class="float-left">Fecha de inicio</label>' +
-                        '<input type="datetime-local" id="swal-input3" name="fechaInicio" class="swal2-input" onchange="calcularFin()" placeholder="Fecha Inicio">' +
-                        '<input type="hidden" id="swal-input2" name="fechaFin" class="swal2-input" value="2021-10-31 12:00:00" placeholder="Fecha Inicio">' +
+                        `<input type="datetime-local" id="swal-input3" name="fechaInicio" class="swal2-input" onchange='calcularFin()' placeholder="Fecha Inicio">` +
+                        '<input type="hidden" id="swal-input2" name="fechaFin" class="swal2-input" placeholder="Fecha Inicio">' +
                         `<button class="btn btn-primary" onclick="sumDateTime()">Crear</button>` +
                         '</form>',
                     type: "warning",
@@ -182,6 +189,8 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+
 
 
 {% endblock main__content %}

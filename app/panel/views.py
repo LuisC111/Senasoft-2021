@@ -101,6 +101,25 @@ def panelCalendarNuevo():
         db.session.add(newTask)
         db.session.commit()
 
+        usuarioId = newTask.idUsuarioFK
+
+        dataAllUsuario = Task.query.filter(Task.idUsuarioFK == usuarioId).all()
+        
+        dataUsuario = []
+        fechasUsuario = []
+
+        for data in dataAllUsuario:
+            dataUsuario.append(data)
+        
+        for data in dataUsuario:
+            onlyDate = data.horaInicio
+            fechasUsuario.append(onlyDate)
+        
+        horasTotal = 0
+        
+        
+
+
         flash('Tarea creada correctamente', 'success')
         
         return redirect(url_for('panel.panelCalendarUsuario', idUsuario=idUsuarioActual))
@@ -385,7 +404,7 @@ def panelTurnos():
 
     return render_template('datatablesPanelTurnos.html', **context )
 
-@panel.route('/turno/crearturno', methods=['GET', 'POST'])
+"""@panel.route('/turno/crearturno', methods=['GET', 'POST'])
 @login_required
 def panelCrearTurno():
     context = {
@@ -401,7 +420,7 @@ def panelCrearTurno():
         edadUsuario = request.form['edadUsuario']
         edadUsuario = request.form['edadUsuario']
 
-    return render_template('crearTurno.html', **context)
+    return render_template('crearTurno.html', **context)"""
 
 @panel.route('/editarPerfil/<userId>', methods=['GET', 'POST'])
 @login_required
