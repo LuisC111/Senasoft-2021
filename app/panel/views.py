@@ -86,6 +86,60 @@ def jsonfile(userId):
 
     return jsonify(output)
 
+@panel.route('/calendar/nuevoCalendar', methods=['GET', 'POST'])
+@login_required
+def panelCalendarNuevo():
+    if request.method == 'POST':
+        idUsuarioActual = request.form['idUsuario']
+        nombreTask = request.form['nombreTask']
+        describcionTaks = "prueba"
+        fechaInicio = request.form['fechaInicio']
+        fechaFin = request.form['fechaFin']
+        newTask = Task(nombreTask, describcionTaks, fechaInicio, fechaFin, None, 6, 2)
+        # nombreTask, descTurno, horaInicio, horaFin, urlReunion, idUsuarioFK,idPacienteFK
+
+        db.session.add(newTask)
+        db.session.commit()
+
+        flash('Tarea creada correctamente', 'success')
+        
+        return redirect(url_for('panel.panelCalendarUsuario', idUsuario=idUsuarioActual))
+
+@panel.route('/calendar/eliminar/<int:idCalendar>', methods=['GET', 'POST'])
+@login_required
+def panelCalendarEliminar(idCalendar):
+    if request.method == 'POST':
+        dataTask = Task.query.filter(Task.idTask == idCalendar).first()
+        idUsuarioActual = request.form['idUsuario']
+
+        db.session.delete(dataTask)
+        db.session.commit()
+
+        flash('Tarea eliminada correctamente', 'success')
+        
+        return redirect(url_for('panel.panelCalendarUsuario', idUsuario=idUsuarioActual))
+
+@panel.route('/calendar/editar/<int:idCalendar>', methods=['GET', 'POST'])
+@login_required
+def panelCalendarEditar(idCalendar):
+    if request.method == 'POST':
+        dataTask = Task.query.filter(Task.idTask == idCalendar).first()
+        idUsuarioActual = request.form['idUsuario']
+
+        nombreTask = request.form['nombreTask']
+        fechaInicio = request.form['fechaInicio']
+        fechaFin = request.form['fechaFin']
+        
+        dataTask.nombreTask = nombreTask
+        dataTask.horaInicio = fechaInicio
+        dataTask.horaFin = fechaFin
+
+        db.session.commit()
+
+        flash('Tarea editada correctamente', 'success')
+        
+        return redirect(url_for('panel.panelCalendarUsuario', idUsuario=idUsuarioActual))
+
 @panel.route('/usuarios')
 #@admin_required
 @login_required

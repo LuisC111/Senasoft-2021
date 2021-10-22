@@ -1,131 +1,165 @@
-{% extends 'base.html' %} {% block title %} {{ super() }} Calendario de turnos
-{% endblock title %} {% block header_type %} {% include
-'headerPanelUsuario.html' %} {% endblock header_type %} {% block body_type %} {%
-endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
-%} {% block main__content %}
+{% extends 'base.html' %} {% block title %} {{ super() }} Calendario de turnos {% endblock title %} {% block header_type %} {% include 'headerPanelUsuario.html' %} {% endblock header_type %} {% block body_type %} {% endblock body_type %} {% block main_type
+%} {{ super() }} {% endblock main_type %} {% block main__content %}
 <div class="main-panel">
-  <div class="content-wrapper">
+    <div class="content-wrapper">
 
-    <a href="#"><button class="btn btn-success" style="margin-left: 1200px">
+        <a href="#"><button class="btn btn-success" style="margin-left: 1200px">
         Generar reporte</button><br /><br/></a>
 
-    <div id="calendar" style="width: 100%"></div>
-  </div>
+        <div id="calendar" style="width: 100%"></div>
+    </div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form id="form">
-                  <div class="mb-3">
-                      <label class="form-label">Correo electrónico</label>
-                      <input type="text" class="form-control" id="username" name="username" placeholder="email" />
-                  </div>
-                  <div class="modal-footer d-block">
-                      <button type="submit" class="btn btn-warning float-end">Actualizar</button>
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-footer d-block">
+                    <button type="submit" onclick="" class="btn btn-warning float-end">Editar</button>
+                </div>
+                <div class="modal-footer d-block">
+                    <button type="submit" class="btn btn-warning float-end">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script>
-  
-</script>
 
 <script>
-let itemList = [];
+    let itemList;
+    let item;
+
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-      if (xhttp.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
-        item = JSON.parse(this.responseText);
-        itemList.push(item);
-        console.log(itemList);
-      }
-    };
-    xhttp.open("GET", 'http://127.0.0.1:5000/panel/calendar/jsonfile/6', true);
-    xhttp.send();
-  document.addEventListener("DOMContentLoaded", function () {
-    var calendarEl = document.getElementById("calendar");
-    var today = new Date();
-    var date =  today.getFullYear()+"-"+(today.getMonth() + 1)+"-"+today.getDate();
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      timeZone: "local",
-      headerToolbar: {
-        left: "prev,next,today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay",
-      },
-      initialDate: date,
-      navLinks: true, // can click day/week names to navigate views
-      selectable: true,
-      selectMirror: true,
-      select: function (arg) {
-        Swal.fire({
-            title: "Ingrese los detalles del turno:",
-            html:
-            '<form action="/usuario" method="POST">' +
-              '<label class="float-left">Nombre del turno</label>' +
-              '<input type="text" id="swal-input1" name="" class="swal2-input" placeholder="Nombre del turno">' +
-              '<label class="float-left">Fecha de inicio</label>' +
-              '<input type="datetime-local" id="swal-input2" class="swal2-input">' +
-              '<label class="float-left">Fecha de fin</label>' +
-              '<input type="datetime-local" id="swal-input3" class="swal2-input">'+
-              '<button class="btn btn-behance">Crear</button>'+
-            '</form>',
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Asignar!",
-            closeOnConfirm: false,
-            closeModal: false,
-          }).then((isConfirm, title,horaInicio,horaFin) => {
-            title = document.getElementById('swal-input1').value,
-            horaInicio = document.getElementById('swal-input2').value,
-            horaFin = document.getElementById('swal-input3').value
-            if(title){
-              calendar.addEvent({
-                title: title,
-                start: horaInicio,
-                end: horaFin  
-              });
-              console.log(horaInicio+horaFin);
-            }
-        });
-        calendar.unselect();
-      },
-      eventClick: function (arg) {
-        if (confirm("¿Estas seguro de que deseas borrar este turno?")) {
-          arg.event.remove();
+        if (xhttp.readyState == 4 && this.status == 200) {
+            var itemJson = this.responseText;
+            itemJson = itemJson.replace(/\"idTask\":/g, "\"id\":")
+            itemJson = itemJson.replace(/\"nombreTask\":/g, "\"title\":")
+            itemJson = itemJson.replace(/\"horaInicio\":/g, "\"start\":")
+            itemJson = itemJson.replace(/\"horaFin\":/g, "\"end\":")
+            itemJson = itemJson.replace(/\"descTurno\":/g, "\"description\":")
+            item = JSON.parse(itemJson);
+            itemList = JSON.parse(itemJson);
+            createCalendar(item);
         }
-      },
-      editable: true,
-      dayMaxEvents: true,
-      events: [
-    {
-      title: 'My Event',
-      start: '2021-10-22',
-      description: 'This is a cool event'
+    };
+    xhttp.open("GET", 'http://127.0.0.1:5000/panel/calendar/jsonfile/{{ enfermeraSeleccionada }}', true);
+    xhttp.send();
+
+    function createCalendar(item) {
+        let itemList = item;
+        console.log(item);
+        var calendarEl = document.getElementById("calendar");
+        var today = new Date();
+        var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            timeZone: "local",
+            headerToolbar: {
+                left: "prev,next,today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay",
+            },
+            initialDate: date,
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+            selectMirror: true,
+
+            select: function(arg) {
+                Swal.fire({
+                    title: "Ingrese los detalles del turno:",
+                    html: '<form action="/panel/calendar/nuevoCalendar" method="POST">' +
+                        '<label class="float-left">Nombre del turno</label>' +
+                        '<input type="hidden" id="swal-input1" name="idUsuario" class="swal2-input" value="{{ enfermeraSeleccionada }}">' +
+                        '<input type="text" id="swal-input1" name="nombreTask" class="swal2-input" placeholder="Nombre del turno">' +
+                        '<label class="float-left">Fecha de inicio</label>' +
+                        '<input type="datetime-local" id="swal-input2" name="fechaInicio" class="swal2-input" placeholder="Fecha Inicio">' +
+                        '<label class="float-left">Fecha de fin</label>' +
+                        '<input type="datetime-local" id="swal-input3" name="fechaFin" class="swal2-input" placeholder="Fecha Fin">' +
+                        '<button class="btn btn-behance">Crear</button>' +
+                        '</form>',
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Asignar!",
+                    closeOnConfirm: false,
+                    closeModal: false,
+                });
+                calendar.unselect();
+            },
+            eventClick: function(info) {
+                let idTask = info.event.id;
+                let title = info.event.title;
+                let horaIni = info.event.start;
+                let horaFin = info.event.end;
+
+                console.log(horaFin);
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-danger',
+                        cancelButton: 'btn btn-info'
+                    },
+                    buttonsStyling: false
+                })
+
+                Swal.fire({
+                    title: 'Elije la opcion a ejecutar',
+                    text: "Recuerda que los cambios son irreversibles",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Editar!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Desea eliminar este registro?",
+                            html: `<form action = '/panel/calendar/eliminar/${idTask}' method = "POST">` +
+                                '<input type="hidden" id="swal-input1" name="idUsuario" class="swal2-input" value="{{ enfermeraSeleccionada }}">' +
+                                '<button class="btn btn-behance">Eliminar!</button>' +
+                                '</form>',
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Eliminar!",
+                            showConfirmButton: false,
+                            closeOnConfirm: false,
+                            closeModal: false,
+                        });
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire({
+                            title: "Desea eliminar este registro?",
+                            html: `<form action = '/panel/calendar/editar/${idTask}' method = "POST">` +
+                                '<label class="float-left">Nombre del turno</label>' +
+                                '<input type="hidden" id="swal-input1" name="idUsuario" class="swal2-input" value="{{ enfermeraSeleccionada }}">' +
+                                `<input type="text" id="swal-input1" name="nombreTask" value="${title}" class="swal2-input" placeholder="Nombre del turno">` +
+                                '<label class="float-left">Fecha de inicio</label>' +
+                                `<input type="datetime-local" id="swal-input2" name="fechaInicio" value="${horaIni}" class="swal2-input" placeholder="Fecha Inicio">` +
+                                '<label class="float-left">Fecha de fin</label>' +
+                                `<input type="datetime-local" id="swal-input3" name="fechaFin" value="${horaFin}" class="swal2-input" placeholder="Fecha Fin">` +
+                                '<button class="btn btn-behance">Crear</button>' +
+                                '</form>',
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Eliminar!",
+                            showConfirmButton: false,
+                            closeOnConfirm: false,
+                            closeModal: false,
+                        });
+                    }
+                });
+            },
+            editable: false,
+            dayMaxEvents: true,
+            events: itemList,
+        });
+        calendar.render();
     }
-    // more events here
-  ],
-  eventRender: function(info) {
-    var tooltip = new Tooltip(info.el, {
-      title: info.event.extendedProps.description,
-      placement: 'top',
-      trigger: 'hover',
-      container: 'body'
-    });
-  }
-    });
-    calendar.render();
-  });
 </script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
