@@ -1,4 +1,4 @@
-[Luis]
+[David]
 Elevator pitch
 
 
@@ -59,4 +59,4 @@ mostrare un breve ejemplo con el crud de usuarios.
 
 
 Podemos concluir de MediFlow es la solución a muchos de los problemas cotidian os dentro de los servicios de la salud, ya que optimiza los tiempos de control
-y asignacion de turnos, la 
+y asignacion de turnos, si les parecio interesante y desean saber mas, los invitamos a seguirnos en nuestras redes sociales como @MediFlow. Muchas gracias.
