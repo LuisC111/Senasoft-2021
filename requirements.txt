@@ -6,3 +6,4 @@ flask_login
 fpdf
 mariadb
 flask_sqlalchemy
+jsonpickle

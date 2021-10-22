@@ -6,11 +6,6 @@ endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
 <div class="main-panel">
   <div class="content-wrapper">
 
-    <select class="form-select col-md-3" aria-label="Default select example" style="margin-left: 240px; margin-bottom: -40px;">
-      <option selected>Selecciona un usuario</option>
-      <option value="1">Test</option>
-    </select>
-
     <a href="#"><button class="btn btn-success" style="margin-left: 1200px">
         Generar reporte</button><br /><br/></a>
 
@@ -26,60 +21,10 @@ endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              <form>
+              <form id="form">
                   <div class="mb-3">
                       <label class="form-label">Correo electrónico</label>
                       <input type="text" class="form-control" id="username" name="username" placeholder="email" />
-                  </div>
-                  <div class="mb-3">
-                      <label class="form-label">Nombre(s)</label>
-                      <input type="text" class="form-control" id="password" name="nombre" placeholder="Nombre" />
-                  </div>
-                  <div class="mb-3">
-                      <label class="form-label">Apellido(s)</label>
-                      <input type="text" class="form-control" id="password" name="Apellido" placeholder="Apellido" />
-                  </div>
-                  <div class="mb-3">
-                      <label class="form-label">Telefono</label>
-                      <input type="text" class="form-control" id="password" name="tel" placeholder="Telefono" />
-                  </div>
-                  <div class="mb-3">
-                      <label class="form-label">Tipo de documento</label>
-                     <div class="formulario__grupo-input">
-                          <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
-                              <option selected>Selecciona un tipo de documento</option>
-                              <option value="1">Cedula de Ciudadanía</option>
-                              <option value="2">Tarjeta de identidad</option>
-                              <option value="3">Pasaporte</option>
-                          </select>
-                      </div>
-                  </div>
-                  <div class="mb-3">
-                      <label class="form-label">Numero de documento</label>
-                      <input type="text" class="form-control" id="password" name="doc" placeholder="Documento" />
-                  </div>
-                 <div class="mb-3">
-                      <label class="form-label">Rol del usuario</label>
-                     <div class="formulario__grupo-input">
-                          <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
-                              <option selected>Selecciona el rol del usuario</option>
-                              <option value="1">Administrador</option>
-                              <option value="2">Encargado</option>
-                              <option value="3">Enfermera</option>
-                          </select>
-                      </div>
-                  </div>
-                   <div class="mb-3">
-                      <label class="form-label">Especialidad asignada</label>
-                     <div class="formulario__grupo-input">
-                          <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
-                              <option selected>Selecciona la especialidad</option>
-                              <option value="1">Ventilado</option>
-                              <option value="2">Infante</option>
-                              <option value="3">Medicamentos</option>
-                              <option value="4">General</option>
-                          </select>
-                      </div>
                   </div>
                   <div class="modal-footer d-block">
                       <button type="submit" class="btn btn-warning float-end">Actualizar</button>
@@ -89,8 +34,22 @@ endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
       </div>
   </div>
 </div>
+<script>
+  
+</script>
 
 <script>
+  function loadData(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+          let item = JSON.parse(this.responseText);
+      }
+    };
+    xhttp.open("GET", "http://localhost:5000/panel/calendar/jsonfile", true);
+    xhttp.send();
+  } 
   document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
     var today = new Date();
@@ -107,15 +66,37 @@ endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
       selectable: true,
       selectMirror: true,
       select: function (arg) {
-        $('#modalForm').modal('show'); 
-        if (title) {
-          calendar.addEvent({
-            title: title,
-            start: arg.start,
-            end: arg. end,
-            allDay: arg.allDay,
-          });
-        }
+        Swal.fire({
+            title: "Ingrese los detalles del turno:",
+            html:
+            '<form action="/usuario" method="POST">' +
+              '<label class="float-left">Nombre del turno</label>' +
+              '<input type="text" id="swal-input1" name="" class="swal2-input" placeholder="Nombre del turno">' +
+              '<label class="float-left">Fecha de inicio</label>' +
+              '<input type="datetime-local" id="swal-input2" class="swal2-input">' +
+              '<label class="float-left">Fecha de fin</label>' +
+              '<input type="datetime-local" id="swal-input3" class="swal2-input">'+
+              '<button class="btn btn-behance">Crear</button>'+
+            '</form>',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Asignar!",
+            closeOnConfirm: false,
+            closeModal: false,
+          }).then((isConfirm, title,horaInicio,horaFin) => {
+            title = document.getElementById('swal-input1').value,
+            horaInicio = document.getElementById('swal-input2').value,
+            horaFin = document.getElementById('swal-input3').value
+            if(title){
+              calendar.addEvent({
+                title: title,
+                start: horaInicio,
+                end: horaFin  
+              });
+              console.log(horaInicio+horaFin);
+            }
+        });
         calendar.unselect();
       },
       eventClick: function (arg) {
@@ -138,7 +119,7 @@ endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
         {
           groupId: 999,
           title: "Turno largo",
-          start: "2021-10-21T16:00:00",
+          start: "2021-10-21T16:00",
         },
         {
           title: "Turno de todo el día",
@@ -155,5 +136,9 @@ endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
     calendar.render();
   });
 </script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 
 {% endblock main__content %}

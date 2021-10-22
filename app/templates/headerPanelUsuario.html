@@ -94,16 +94,16 @@
             </div>
           </li>
           
-        <li class="nav-item"><a href="editarPerfil/{{userLogged.idUsuario}}" style="color:green; text-decoration:none">Editar perfil</a></li>
+        <li class="nav-item">{{nombreUsuario+" "+userLogged.apellidoUsuario}}</li>
 
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="{{ url_for('static', filename='img/user.jpg') }}" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+              <a href="editarPerfil/{{userLogged.idUsuario}}" class="dropdown-item">
                 <i class="ti-settings text-primary"></i>
-                Configuración
+                Editar perfil
               </a>
               <a class="dropdown-item" href="{{url_for('auth.logout')}}">
                 <i class="ti-power-off text-primary"></i>
@@ -111,7 +111,7 @@
                 </a>
             </div>
           </li>
-          <li class="nav-item"><a href="{{url_for('auth.logout')}}" style="color:red; text-decoration:none">Cerrar Sesión</a></li>
+          <!--<li class="nav-item"><a href="{{url_for('auth.logout')}}" style="color:red; text-decoration:none">Cerrar Sesión</a></li>-->
           <li class="nav-item nav-settings d-none d-lg-flex">
             <a class="nav-link" href="#">
               <i class="icon-ellipsis"></i>
@@ -193,39 +193,31 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="/panel">
+            <a class="nav-link" href="{{url_for('panel.panelInicio')}}">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Página principal</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/panel/calendar">
+            <a class="nav-link" href="{{url_for('panel.panelCalendar')}}">
               <i class="ti-calendar menu-icon"></i>
               <span class="menu-title">Calendario</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/panel/usuarios">
+            <a class="nav-link" href="{{url_for('panel.panelUsuarios')}}">
               <i class="ti-user menu-icon"></i>
               <span class="menu-title">Usuarios</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/panel/turnos">
+            <a class="nav-link" href="{{url_for('panel.panelTurnos')}}">
               <i class="ti-ticket menu-icon"></i>
               <span class="menu-title">Turnos</span>
             </a>
           </li>
-
           <li class="nav-item">
-            <a class="nav-link" href="/panel/especialidades">
-              <i class="ti-heart-broken  menu-icon"></i>
-              <span class="menu-title">Especialidades</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/panel/paciente">
+            <a class="nav-link" href="{{url_for('panel.panelPaciente')}}">
               <i class="ti-wheelchair  menu-icon"></i>
               <span class="menu-title">Pacientes</span>
             </a>
@@ -239,21 +231,27 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="/panel">
+            <a class="nav-link" href="{{url_for('panel.panelInicio')}}">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Página principal</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/panel/calendar">
+            <a class="nav-link" href="{{url_for('panel.panelCalendar')}}">
               <i class="ti-calendar menu-icon"></i>
               <span class="menu-title">Calendario</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/panel/turnos">
+            <a class="nav-link" href="{{url_for('panel.panelTurnos')}}">
               <i class="ti-ticket menu-icon"></i>
               <span class="menu-title">Turnos</span>
+            </a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{url_for('panel.panelPaciente')}}">
+              <i class="ti-wheelchair  menu-icon"></i>
+              <span class="menu-title">Pacientes</span>
             </a>
           </li>
         </ul>
@@ -263,19 +261,14 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="/panel">
+            <a class="nav-link" href="{{url_for('panel.panelInicio')}}">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Página principal</span>
             </a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="/panel/calendar">
-              <i class="ti-calendar menu-icon"></i>
-              <span class="menu-title">Calendario</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/panel/turnos">
+            <a class="nav-link" href="{{url_for('panel.panelTurnos')}}">
               <i class="ti-ticket menu-icon"></i>
               <span class="menu-title">Turnos</span>
             </a>

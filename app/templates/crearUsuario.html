@@ -36,7 +36,7 @@
                             </div>
                             <h4 class="mb-0">Nombre del usuario{{NombreUsuario}}</h4>
                             <span class="text-muted d-block mb-2">Correo del usuario {{CorreoUsuario}}</span>
-                            <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primaryy mr-2">Médico</button>
+                            <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primaryy mr-2">Enfermera</button>
                         </center>
                     </div>
                     <ul class="list-group list-group-flush">
@@ -145,11 +145,11 @@
                                                 </div>
                                             </div>
 
-                                            <div id="selectEspecialidad" class="form-group col-md-6" style="display: hidden">
+                                            <div id="selectEspecialidad" class="form-group col-md-6" style="display: none">
                                                 <div class="formulario__grupo" id="grupo__documentoUsuario">
                                                     <label for="feInputCity" class="text-primary">Especialidad asignada</label>
                                                     <div class="formulario__grupo-input">
-                                                    <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                                    <select name="tipoEspecialidad" class="form-select " aria-label="Default select example" required>
                                                         <option selected>Selecciona una especialidad</option>
                                                         <option value="1">Ventilado</option>
                                                         <option value="2">Infante</option>
@@ -161,13 +161,7 @@
                                             </div>
 
                                         </div>
-
-                                       
-
-
-                                            
-                                        </div>
-                                                                   
+                                        </div>                  
                                         </div>
                                         </div>
                                         <br><button type="submit" class="btn btn-primary mr-2" style="float: right;">Actualizar Datos</button>
@@ -183,13 +177,16 @@
 
   <script src="../static/js/formModificacionUsuarios.js"></script>
   <script>
-      
+        const tipoUsuario = document.getElementById("tipoUsuario")
+
       tipoUsuario.addEventListener('change', (event)=> {
         const tipoUsuario = document.getElementById("tipoUsuario").selectedIndex;
         console.log(tipoUsuario);
 
         if (tipoUsuario == 3) {
-            const divEspecialidad = document.getElementById("selectEspecialidad").style.display = 'show';
+            const divEspecialidad = document.getElementById("selectEspecialidad").style.display = 'initial';
+        } else {
+            const divEspecialidad = document.getElementById("selectEspecialidad").style.display = 'none';
         }
 
     })

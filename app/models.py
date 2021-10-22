@@ -1,9 +1,18 @@
 # importar librerias necesarias para la creación correcta de la base de datos
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from flask_marshmallow import Marshmallow
+
 
 # Instanciar db y darle el varlor de la lib SQLAlchemy
 db = SQLAlchemy()
+ma = Marshmallow()
+
+def dump_datetime(value):
+    """Deserialize datetime object into string form for JSON processing."""
+    if value is None:
+        return None
+    return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
 
 class TipoUsuario(db.Model):
     # Creación de la tabla Usuario
@@ -40,6 +49,22 @@ class Task(db.Model):
         self.idUsuarioFK = idUsuarioFK
         self.idPacienteFK = idPacienteFK
 
+    def serialize(self):
+       """Return object data in easily serializable format"""
+       return {
+           'idTask'         : self.id,
+           'nombreTask': self.nombreTask,
+           'descTurno': self.descTurno,
+           'descTurno': self.descTurno,
+           'horaInicio': dump_datetime(self.horaInicio),
+           'horaFin': dump_datetime(self.horaFin),
+           'urlReunion': self.urlReunion,
+       }
+
+class TaskSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Task
+
 class Paciente(db.Model):
     # Creación de la tabla Usuario
     __tablename__ = 'Paciente'
@@ -49,17 +74,19 @@ class Paciente(db.Model):
     apellidoPaciente = db.Column(db.String(255))
     documentoPaciente = db.Column(db.String(45))
     telefonoPaciente = db.Column(db.String(45))
+    estadoPaciente = db.Column(db.Boolean(False))
     edadPaciente = db.Column(db.Integer)
     # Relaciones entre tablas
     idEspecialidadFK = db.Column(db.Integer, db.ForeignKey('Especialidad.idEspecialidad'))
     task = db.relationship('Task')
 
     # Definición de las relaciones 
-    def __init__(self, nombrePaciente, apellidoPaciente, documentoPaciente, telefonoPaciente, edadPaciente, idEspecialidadFK):
+    def __init__(self, nombrePaciente, apellidoPaciente, documentoPaciente, telefonoPaciente, estadoPaciente, edadPaciente, idEspecialidadFK):
         self.nombrePaciente = nombrePaciente
         self.apellidoPaciente = apellidoPaciente
         self.documentoPaciente = documentoPaciente
         self.telefonoPaciente = telefonoPaciente
+        self.estadoPaciente = estadoPaciente
         self.edadPaciente = edadPaciente
         self.idEspecialidadFK = idEspecialidadFK
 

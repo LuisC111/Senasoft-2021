@@ -15,6 +15,78 @@
 {% endblock main_type %}
 
 {% block main__content %}
+<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar paciente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre(s)</label>
+                        <input type="text" class="form-control" id="password" name="nombreUsuario" placeholder="Nombre" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Apellido(s)</label>
+                        <input type="text" class="form-control" id="password" name="apellidoUsuario" placeholder="Apellido" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefono</label>
+                        <input type="text" class="form-control" id="password" name="telefonoUsuario" placeholder="Telefono" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Edad</label>
+                        <input type="text" class="form-control" id="password" name="telefonoUsuario" placeholder="Telefono" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Especialidad</label>
+                       <div class="formulario__grupo-input">
+                            <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                <option value="1">Cedula de Ciudadanía</option>
+                                <option value="2">Tarjeta de identidad</option>
+                                <option value="3">Pasaporte</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Numero de documento</label>
+                        <input type="text" class="form-control" name="documentoUsuario" placeholder="Documento" value=""/>
+                    </div>
+                   <div class="mb-3">
+                        <label class="form-label">Especialidad</label>
+                       <div class="formulario__grupo-input">
+                            <select name="tipoUsuario" id="tipoUsuario" class="form-select " aria-label="Default select example" >
+                                <option value="1">Ventilado</option>
+                                <option value="2">Infante</option>
+                                <option value="3">Medicamentos</option>
+                                <option value="4">General</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="mb-3" style="display: none" id="selectEspecialidad">
+                        <label class="form-label">Especialidad asignada</label>
+                       <div class="formulario__grupo-input">
+                            <select name="tipoEspecialidad" class="form-select " aria-label="Default select example"s>
+                                <option value="1">Ventilado</option>
+                                <option value="2">Infante</option>
+                                <option value="3">Medicamentos</option>
+                                <option value="4">General</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-block">
+                        <button type="submit" class="btn btn-warning float-end">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
@@ -37,10 +109,22 @@
                                                     <th>Edad</th>
                                                     <th>Especialidad</th>
                                                     <th>Modificar</th>
+                                                    <th>Inactivar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                {% for paciente in pacientes %}
+                                                    <tr>
+                                                        <th style="font-weight: normal;">{{paciente.idPaciente}}</th>
+                                                        <th style="font-weight: normal;">{{paciente.nombrePaciente}}</th>
+                                                        <th style="font-weight: normal;">{{paciente.apellidoPaciente}}</th>
+                                                        <th style="font-weight: normal;">{{paciente.telefonoPaciente}}</th>
+                                                        <th style="font-weight: normal;">{{paciente.edadPaciente}}</th>
+                                                        <th style="font-weight: normal;">{{paciente.idEspecialidadFK}}</th>
+                                                        <td><a href="">Editar</a></td>
+                                                        <td><a href="">Inactivar</a></td>
+                                                    </tr>
+                                                {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>

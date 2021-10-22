@@ -37,8 +37,8 @@ usuario4 = Usuario('pep01@gmail.com', '12345678', 'Pepe', 'Perez', '3162943432',
 usuario5 = Usuario('prueba12@gmail.com', '12345678', 'Prueba', 'Sena', '3162943432', '1695325698', 1, 1, 3, None, 2)
 usuario6 = Usuario('micorreo123@gmail.com', '12345678', 'Lucho', 'Paez', '3162943432', '1003365995', 1, 1, 3, None, 3)
 
-paciente1 = Paciente('pepito','perez', '10002365412', '3159854121', 18, 3)
-paciente2 = Paciente('Carlos', 'Emilio', '10254896', '3213213215', 12, 2)
+paciente1 = Paciente('pepito','perez', '10002365412', '3159854121', 1, 18, 3)
+paciente2 = Paciente('Carlos', 'Emilio', '10254896', '3213213215', 1, 12, 2)
 # Envio de datos a la bd
 db.session.add(tipoDoc1)
 db.session.add(tipoDoc2)

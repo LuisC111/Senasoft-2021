@@ -3,7 +3,7 @@ from flask import Flask
 
 # Importancion de las configuraciones y blueprints
 from .config import Config
-from .models import db
+from .models import db, ma
 from .auth import auth
 from .panel import panel
 from .auth.views import login_manager
@@ -21,4 +21,5 @@ def create_app():
 
 
     db.init_app(app)
+    ma.init_app(app)
     return app

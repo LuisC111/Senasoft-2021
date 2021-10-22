@@ -16,7 +16,12 @@
 
 {% block main__content %}
 
-
+{% if UsuarioData %}
+<script>
+    $(document).ready(function(){
+        $("#modalForm").modal("show");
+    });
+</script>
 <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -25,28 +30,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="{{ url_for('panel.editarUsuario', idUsuario=UsuarioData.idUsuario) }}" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Correo electrónico</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="email" />
+                        <input type="text" class="form-control" id="username" name="emailUsuario" placeholder="email" value="{{UsuarioData.correoUsuario}}" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nombre(s)</label>
-                        <input type="text" class="form-control" id="password" name="nombre" placeholder="Nombre" />
+                        <input type="text" class="form-control" id="password" name="nombreUsuario" placeholder="Nombre" value="{{UsuarioData.nombreUsuario}}" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Apellido(s)</label>
-                        <input type="text" class="form-control" id="password" name="Apellido" placeholder="Apellido" />
+                        <input type="text" class="form-control" id="password" name="apellidoUsuario" placeholder="Apellido" value="{{UsuarioData.apellidoUsuario}}" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Telefono</label>
-                        <input type="text" class="form-control" id="password" name="tel" placeholder="Telefono" />
+                        <input type="text" class="form-control" id="password" name="telefonoUsuario" placeholder="Telefono" value="{{UsuarioData.telefonoUsuario}}" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tipo de documento</label>
                        <div class="formulario__grupo-input">
                             <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
-                                <option selected>Selecciona un tipo de documento</option>
                                 <option value="1">Cedula de Ciudadanía</option>
                                 <option value="2">Tarjeta de identidad</option>
                                 <option value="3">Pasaporte</option>
@@ -55,24 +59,22 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Numero de documento</label>
-                        <input type="text" class="form-control" id="password" name="doc" placeholder="Documento" />
+                        <input type="text" class="form-control" name="documentoUsuario" placeholder="Documento" value="{{UsuarioData.numeroDocumento}}"/>
                     </div>
                    <div class="mb-3">
                         <label class="form-label">Rol del usuario</label>
                        <div class="formulario__grupo-input">
-                            <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
-                                <option selected>Selecciona el rol del usuario</option>
+                            <select name="tipoUsuario" id="tipoUsuario" class="form-select " aria-label="Default select example" >
                                 <option value="1">Administrador</option>
                                 <option value="2">Encargado</option>
                                 <option value="3">Enfermera</option>
                             </select>
                         </div>
                     </div>
-                     <div class="mb-3">
+                     <div class="mb-3" style="display: none" id="selectEspecialidad">
                         <label class="form-label">Especialidad asignada</label>
                        <div class="formulario__grupo-input">
-                            <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
-                                <option selected>Selecciona la especialidad</option>
+                            <select name="tipoEspecialidad" class="form-select " aria-label="Default select example"s>
                                 <option value="1">Ventilado</option>
                                 <option value="2">Infante</option>
                                 <option value="3">Medicamentos</option>
@@ -88,10 +90,7 @@
         </div>
     </div>
 </div>
-
-
-
-
+{% endif %}
 
     <div class="main-panel">
         <div class="content-wrapper">
@@ -100,8 +99,7 @@
                     <div class="card">
                         <div class="card-body">
                             <p class="card-title">Tabla de usuarios</p>
-                            <a href="crearUsuario"><button class="btn btn-behance">Crear usuario</button></a>
-                            <a href="#"><button class="btn btn-success float-right">Generar reporte</button><br><br></a>
+                            <a href="{{url_for('panel.panelCrearUsuario')}}"><button class="btn btn-behance">Crear usuario</button></a><br><br>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
@@ -115,6 +113,7 @@
                                                     <th>Telefono</th>
                                                     <th>Numero de documento</th>
                                                     <th>Especialidad</th>
+                                                    <th>Ver turnos</th>
                                                     <th>Modificar</th>
                                                     <th>Inactivar</th>
                                                 </tr>
@@ -128,9 +127,26 @@
                                                         <td>{{usuario.correoUsuario}}</td>
                                                         <td>{{usuario.telefonoUsuario}}</td>
                                                         <td>{{usuario.numeroDocumento}}</td>
-                                                        <td>{{usuario.idEspecialidadFK}}</td>
-                                                        <td><button type="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#modalForm" style="border: none;">Editar</button></td>
-                                                        <td><a href="">Inactivar</a></td>
+                                                        {% if usuario.idEspecialidadFK == 1 %}
+                                                            {% set especialidadUsuario = 'Administrador' %}
+                                                        {% endif %}
+                                                        {% if usuario.idEspecialidadFK == 2 %}
+                                                            {% set especialidadUsuario = 'Encargado' %}
+                                                        {% endif %}
+                                                        {% if usuario.idEspecialidadFK == 3 %}
+                                                            {% set especialidadUsuario = 'Enfermera' %}
+                                                        {% endif %} 
+                                                        {% if usuario.idEspecialidadFK == None %}
+                                                            {% set especialidadUsuario = 'Vacio' %}
+                                                        {% endif %} 
+                                                        <td>{{especialidadUsuario}}</td>
+                                                        {% if usuario.idEspecialidadFK == 3 %}
+                                                            <td><a href="{{url_for('panel.panelCalendarUsuario', idUsuario=usuario.idUsuario)}}">Calendario</a></td>                                                            
+                                                        {% else %}
+                                                            <td></td>
+                                                        {% endif %}
+                                                        <td><a href="{{url_for('panel.editarUsuario', idUsuario=usuario.idUsuario)}}">Editar</a></td>
+                                                        <td><a href="usuarios/inactivar/{{usuario.idUsuario}}">Inactivar</a></td>
                                                     </tr>    
                                                 {% endfor %}
                                             </tbody>
@@ -145,5 +161,20 @@
         </div>
     </div>
 
+    <script>
+        const tipoUsuario = document.getElementById("tipoUsuario")
+
+        tipoUsuario.addEventListener('change', (event)=> {
+          const tipoUsuario = document.getElementById("tipoUsuario").selectedIndex;
+          console.log(tipoUsuario);
+  
+          if (tipoUsuario == 2) {
+              document.getElementById("selectEspecialidad").style.display = 'initial';
+          } else {
+              document.getElementById("selectEspecialidad").style.display = 'none';
+          }
+  
+      })
+    </script>
 
 {% endblock main__content %} s
