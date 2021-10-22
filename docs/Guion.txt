@@ -1,0 +1,62 @@
+[Luis]
+Elevator pitch
+
+
+**Habla cuando ponga la diapositiva de las tecnologías usadas**
+Para nuestro sistema de información MediFlow empleamos python y el framework flask para el backend, para el frontend usamos html/css, bootstrap 5 y jinja2 como control
+de plantillas y finalmente como motor de base de datos usamos mariadb. Tecnologías de punto en el mercado de software actual.
+
+Ahora bien, como se ve esto en la web... Pues bienvenidos una vez mas a MediFlow
+
+**Abrir el sitio web**
+
+
+Una vez abierto podemos observar una página principal muy intuitiva en donde podemos ver que se compone por un header con todos los modulos principales, entre ellos
+iniciar sesión que lo verémos luego. Si bajamos podemos encontrar ¿Que es MediFlow?, Reseñas y un botón de contacto completamente funcional, para facilitar la 
+interacción entre cliente y encargado.
+
+Ahora, planteare la hipotetica situación en donde soy enfermero y requiero registrarme en el sistema, pues es tan facil como hacer click en "Iniciar sesión"
+
+**Abrir iniciar sesión e ir al registro**
+
+Una vez aquí podemos notar el formulario de registro, será tan facil como rellenarlo y verificar el correo electronico registrado.
+Mientras me registro, cabe mencionar que estan validadas todas las urls para que solo sea posible entrar al sistema con una cuenta valida y verificada.
+
+**Cuando llegue el correo electronico**
+
+Ahora procedemos a abrir el correo electronico y verificar nuestra cuenta para acceder
+
+
+Bien, una vez iniciada la sesión podremos observar un panel o dashboard que cambia según el rol del usuario, ya sea enfermera, encargado o administrador
+en este caso como enfermero, encontramos un panel lateral a la izquierda, en el cual encontramos varias opciones como por ejemplo (...)
+Tambien encontramos un header, en donde se incluye la identidad corporativa de MediFlow, y los modulos en editar perfil y cerrar sesión, 
+ademas contamos con un panel lateral derecho que nos incluye opciones de personalización al igual que la rueda de ajustes flotante.
+
+Decidimos incluir estos cambios de tema/color dcbido a que hay personas que prefieren el tema oscuro ya que se les cansa la vista u otros problemas relacionados.
+
+Por ultimo, en el header tenemos la opción de editar perfil, en donde el usuario puede modificar sus datos personales.
+
+
+
+Ahora bien, en cuanto a las funciones que tiene la enfermera, es la de consultar sus turnos asignados, puede observarlo mediante una tabla o mediante la vista
+del calendario, esto con el fin de proporcionar un recurso visual al usuario y que de esta manera sea mas facil consultar sus turnos.
+
+**Explicar funcionamiento brevemente**
+
+En cuanto al panel de encargado tiene las siguientes opciones, para programar y consultar turnos, en la parte de turnos, contamos con la 
+funcionalidad de poder programar turnos a cualquier enfermera desde el calendario, claramente teniendo en cuenta las restricciones planetadas,
+vamos a programar un turno como ejemplo:
+
+**Lo creo*
+
+Este sería el funcionamiento de los turnos
+
+
+Por ultimo tenemos el panel de administrador, el cual permite total acceso a crear, modificar e inactivar usuarios, turnos y pacientes
+mostrare un breve ejemplo con el crud de usuarios.
+
+**Crear un usuario, luego editarlo y por ultimo inactivarlo**
+
+
+Podemos concluir de MediFlow es la solución a muchos de los problemas cotidian os dentro de los servicios de la salud, ya que optimiza los tiempos de control
+y asignacion de turnos, la 
