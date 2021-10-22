@@ -86,7 +86,7 @@ def register():
             localhost:5000/auth/confirm/{}
             """.format(confirmationHash)
 
-            msg['From']= 'david@mi.com.co'
+            msg['From']= 'flowydomain@gmail.com'
             msg['To']= str(correoUsuario)
             msg['Subject']= "Confirm your email MediFLOW"
 

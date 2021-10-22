@@ -1,6 +1,6 @@
-FROM ubuntu
+FROM alpine
 
-RUN apt install python3-dev \
+RUN apk install python3-dev \
     && pip3 install --upgrade pip
 
 WORKDIR /app
