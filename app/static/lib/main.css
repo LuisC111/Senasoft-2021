@@ -450,6 +450,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
     opacity: var(--fc-bg-event-opacity, 0.3)
   }
 .fc .fc-bg-event .fc-event-title {
+      color: black;
       margin: .5em;
       font-size: .85em;
       font-size: var(--fc-small-font-size, .85em);
@@ -582,13 +583,14 @@ A HORIZONTAL event
 
 }
 .fc-h-event .fc-event-main {
-    color: #fff;
+    color: black;
     color: var(--fc-event-text-color, #fff);
   }
 .fc-h-event .fc-event-main-frame {
     display: flex; /* for make fc-event-title-container expand */
   }
 .fc-h-event .fc-event-time {
+  
     max-width: 100%; /* clip overflow on this element */
     overflow: hidden;
   }
@@ -875,13 +877,16 @@ A HORIZONTAL event
   border-radius: 3px; /* dot event needs this to when selected */
   font-size: .85em;
   font-size: var(--fc-small-font-size, .85em);
+  background-color:#3788d8;
 }
 /* --- the rectangle ("block") style of event --- */
 .fc-daygrid-block-event .fc-event-time {
+  
     font-weight: bold;
   }
 .fc-daygrid-block-event .fc-event-time,
   .fc-daygrid-block-event .fc-event-title {
+    
     padding: 1px;
   }
 /* --- the dot style of event --- */
@@ -892,6 +897,7 @@ A HORIZONTAL event
 
 }
 .fc-daygrid-dot-event .fc-event-title {
+  color: rgb(255, 255, 255);
     flex-grow: 1;
     flex-shrink: 1;
     min-width: 0; /* important for allowing to shrink all the way */
@@ -899,8 +905,9 @@ A HORIZONTAL event
     font-weight: bold;
   }
 .fc-daygrid-dot-event:hover,
-  .fc-daygrid-dot-event.fc-event-mirror {
-    background: rgba(0, 0, 0, 0.1);
+  .fc-daygrid-dot-event.fc-event-mirror, .fc-daygrid-event:hover {
+    cursor: pointer;
+    background: #0564a3b9;
   }
 .fc-daygrid-dot-event.fc-event-selected:before {
     /* expand hit area */
@@ -912,13 +919,14 @@ A HORIZONTAL event
   box-sizing: content-box;
   width: 0;
   height: 0;
-  border: 4px solid #3788d8;
-  border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid var(--fc-event-border-color, #3788d8);
+  border: 4px solid #ffffff;
+  border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid var(--fc-event-border-color, #ffffff);
   border-radius: 4px;
   border-radius: calc(var(--fc-daygrid-event-dot-width, 8px) / 2);
 }
 /* --- spacing between time and title --- */
 .fc-direction-ltr .fc-daygrid-event .fc-event-time {
+  color: #ffffff;
     margin-right: 3px;
   }
 .fc-direction-rtl .fc-daygrid-event .fc-event-time {

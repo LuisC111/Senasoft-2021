@@ -1,5 +1,7 @@
 {% extends 'base.html' %} {% block title %} {{ super() }} Calendario de turnos {% endblock title %} {% block header_type %} {% include 'headerPanelUsuario.html' %} {% endblock header_type %} {% block body_type %} {% endblock body_type %} {% block main_type
 %} {{ super() }} {% endblock main_type %} {% block main__content %}
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
+<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 <div class="main-panel">
     <div class="content-wrapper">
 
@@ -10,6 +12,7 @@
     </div>
 </div>
 <script>
+
     function printContent(el) {
         var restorepage = $('body').html();
         var printcontent = $('#' + el).clone();
@@ -43,6 +46,26 @@
         $("#calendar").printElement();
     }
 
+    function calcularFin(){
+        let fechaI = document.querySelector('#swal-input3')
+        let fechaInicio = fechaI.value;
+        
+        console.log(fechaI.value)
+        let separador = "T"
+        var resultado = fechaI.value.split(separador);
+        var d = new Date(fechaI.value);
+        console.log('Before:\t', d.toLocaleString('en-US',{ hour12: false }))
+
+          // Add 1 hour to datetime
+  d.setHours(d.getHours() + 12);
+  
+  console.log('After:\t', d.toLocaleString('en-US',{ hour12: false }))
+
+        
+        console.log(DateTime.fromFormat(d.toLocaleString('en-US',{ hour12: false }), "D hh:mm:ss.SSS a").toISO())
+
+    }
+
     function createCalendar(item) {
         let itemList = item;
         console.log(item);
@@ -50,6 +73,8 @@
         var today = new Date();
         var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
         var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'esLocale',
+            themeSystem: 'bootstrap',
             timeZone: "local",
             headerToolbar: {
                 left: "prev,next,today",
@@ -69,9 +94,9 @@
                         '<input type="hidden" id="swal-input1" name="idUsuario" class="swal2-input" value="{{ enfermeraSeleccionada }}">' +
                         '<input type="text" id="swal-input1" name="nombreTask" class="swal2-input" placeholder="Nombre del turno">' +
                         '<label class="float-left">Fecha de inicio</label>' +
-                        '<input type="datetime-local" id="swal-input2" name="fechaInicio" class="swal2-input" placeholder="Fecha Inicio">' +
-                        '<input type="hidden" id="swal-input2" name="fechaFin" class="swal2-input" placeholder="Fecha Inicio">' +
-                        `<button class="btn btn-behance" onclick="sumDateTime()">Crear</button>` +
+                        '<input type="datetime-local" id="swal-input3" name="fechaInicio" class="swal2-input" onchange="calcularFin()" placeholder="Fecha Inicio">' +
+                        '<input type="hidden" id="swal-input2" name="fechaFin" class="swal2-input" value="2021-10-31 12:00:00" placeholder="Fecha Inicio">' +
+                        `<button class="btn btn-primary" onclick="sumDateTime()">Crear</button>` +
                         '</form>',
                     type: "warning",
                     showCancelButton: true,
@@ -125,7 +150,7 @@
                         result.dismiss === Swal.DismissReason.cancel
                     ) {
                         Swal.fire({
-                            title: "Desea eliminar este registro?",
+                            title: "Modificación de turno",
                             html: `<form action = '/panel/calendar/editar/${idTask}' method = "POST">` +
                                 '<label class="float-left">Nombre del turno</label>' +
                                 '<input type="hidden" id="swal-input1" name="idUsuario" class="swal2-input" value="{{ enfermeraSeleccionada }}">' +
@@ -134,7 +159,7 @@
                                 `<input type="datetime-local" id="swal-input2" name="fechaInicio" value="${horaIni}" class="swal2-input" placeholder="Fecha Inicio">` +
                                 '<label class="float-left">Fecha de fin</label>' +
                                 `<input type="datetime-local" id="swal-input3" name="fechaFin" value="${horaFin}" class="swal2-input" placeholder="Fecha Fin">` +
-                                '<button class="btn btn-behance">Crear</button>' +
+                                '<button class="btn btn-primary">Editar</button>' +
                                 '</form>',
                             type: "warning",
                             showCancelButton: true,
@@ -150,6 +175,7 @@
             dayMaxEvents: true,
             events: itemList,
         });
+        
         calendar.render();
     }
 </script>
