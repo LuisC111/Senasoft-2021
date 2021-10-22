@@ -86,16 +86,16 @@ def jsonfile(userId):
 
     return jsonify(output)
 
-@panel.route('/calendar/nuevoCalendar', methods=['GET', 'POST'])
+@panel.route('/calendar/nuevoCalendar/<int:idUsuario>', methods=['GET', 'POST'])
 @login_required
-def panelCalendarNuevo():
+def panelCalendarNuevo(idUsuario):
     if request.method == 'POST':
         idUsuarioActual = request.form['idUsuario']
         nombreTask = request.form['nombreTask']
         describcionTaks = "prueba"
         fechaInicio = request.form['fechaInicio']
         fechaFin = request.form['fechaFin']
-        newTask = Task(nombreTask, describcionTaks, fechaInicio, fechaFin, None, 6, 2)
+        newTask = Task(nombreTask, describcionTaks, fechaInicio, fechaFin, None, idUsuario, 2)
         # nombreTask, descTurno, horaInicio, horaFin, urlReunion, idUsuarioFK,idPacienteFK
 
         db.session.add(newTask)
@@ -117,9 +117,6 @@ def panelCalendarNuevo():
         
         horasTotal = 0
         
-        
-
-
         flash('Tarea creada correctamente', 'success')
         
         return redirect(url_for('panel.panelCalendarUsuario', idUsuario=idUsuarioActual))

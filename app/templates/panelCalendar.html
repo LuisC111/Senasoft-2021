@@ -96,7 +96,7 @@
             select: function(arg) {
                 Swal.fire({
                     title: "Ingrese los detalles del turno:",
-                    html: '<form action="/panel/calendar/nuevoCalendar" method="POST">' +
+                    html: '<form action="/panel/calendar/nuevoCalendar/{{ enfermeraSeleccionada }}" method="POST">' +
                         '<label class="float-left">Nombre del turno</label>' +
                         '<input type="hidden" id="swal-input1" name="idUsuario" class="swal2-input" value="{{ enfermeraSeleccionada }}">' +
                         '<input type="text" id="swal-input1" name="nombreTask" class="swal2-input" placeholder="Nombre del turno">' +
