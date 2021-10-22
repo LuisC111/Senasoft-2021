@@ -35,7 +35,7 @@ usuario2 = Usuario('hectorflorez35@gmail.com', '12345678', 'Jesid', 'Florez', '3
 usuario3 = Usuario('hjflorez93@misena.edu.co', '12345678', 'Luis', 'Carlos', '3162943432', '1236925233', 1, 1, 2, None, None)
 usuario4 = Usuario('pep01@gmail.com', '12345678', 'Pepe', 'Perez', '3162943432', '1478523698', 1, 1, 2, None, None)
 usuario5 = Usuario('prueba12@gmail.com', '12345678', 'Prueba', 'Sena', '3162943432', '1695325698', 1, 1, 3, None, 2)
-usuario6 = Usuario('micorreo123@gmail.com', '12345678', 'Lucho', 'Paez', '3162943432', '1003365995', 1, 1, 3, None, 3)
+usuario6 = Usuario('lina@gmail.com', '12345678', 'Lina', 'Paez', '3162943432', '1003365995', 1, 1, 3, None, 3)
 
 paciente1 = Paciente('pepito','perez', '10002365412', '3159854121', 1, 18, 3)
 paciente2 = Paciente('Carlos', 'Emilio', '10254896', '3213213215', 1, 12, 2)

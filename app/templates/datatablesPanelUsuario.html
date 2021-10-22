@@ -22,7 +22,7 @@
         $("#modalForm").modal("show");
     });
 </script>
-<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="modal-footer d-block">
-                        <button type="submit" class="btn btn-warning float-end">Actualizar</button>
+                        <button type="submit" class="btn btn-warning float-end" onclick="notify()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -162,6 +162,9 @@
     </div>
 
     <script>
+    function notify(){
+      alertify.success('Usuario modificado con exito.'); 
+ }
         const tipoUsuario = document.getElementById("tipoUsuario")
 
         tipoUsuario.addEventListener('change', (event)=> {

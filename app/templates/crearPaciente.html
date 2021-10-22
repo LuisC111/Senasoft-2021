@@ -3,6 +3,7 @@
 {{ super() }}
  Crear paciente
 {% endblock title %}
+
 {% block header_type %}
  {% include 'headerPanelUsuario.html' %}
 {% endblock header_type %}
@@ -16,6 +17,7 @@
 
 {% block main__content %}
 
+<link href="{{ url_for('static', filename='css/form.css') }}" rel='stylesheet' />
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="page-header row no-gutters py-4">
@@ -34,8 +36,11 @@
                             <div class="mb-3 mx-auto">
                                 <img class="rounded-circle" src="{{ url_for('static', filename='img/user.jpg') }}" alt="User Avatar" width="110">
                             </div>
-                            <h4 class="mb-0">Nombre del paciente{{NombreUsuario}}</h4>
-                            <span class="text-muted d-block mb-2">Apellido del paciente {{CorreoUsuario}}</span>
+                            <input type="text" readonly class="form-control-plaintext mb-0 nombre h4" style="text-align: center;" value="Nombre del paciente">
+
+                            <input type="text" readonly class="form-control-plaintext text-muted d-block mb-2 apellido" style="text-align: center; font-size: 17px;" value="Apellido del paciente">
+
+                            
                             <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primaryy mr-2">Paciente</button>
                         </center>
                     </div>
@@ -46,9 +51,7 @@
                                 <progress max="100" value="0" id="progress" style="width: 100%;"></progress>
                                 <div class="progress-message text-primary" id="progress-message">Vamos a empezar.</div>
                         </li>
-                        <li class="list-group-item p-4">
-                            <strong class="text-muted d-block mb-2">Descripción</strong>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -66,53 +69,66 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <div class="formulario__grupo" id="grupo__nombreUsuario">
-                                                    <label for="nombreUsuario" class="text-primary">Nombre(s)</label>
+                                                    <label for="nombrePaciente" class="text-primary">Nombre(s)</label>
                                                     <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Juan Camilo" value="" required>
+                                                        <input type="text" class="form-control nombrePaciente" name="nombrePaciente" id="nombreUsuario" placeholder="Juan Camilo" value="" required>
+                                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                                     </div>
+                                                    <p class="formulario__input-error">El nombre debe tener un máximo de 40 caracteres y solo debe contener letras.</p>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <div class="formulario__grupo" id="grupo__apellidoUsuario">
-                                                    <label for="apellidoUsuario" class="text-primary">Apellido(s)</label>
+                                                    <label for="apellidoPaciente" class="text-primary">Apellido(s)</label>
                                                     <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="apellidoUsuario" id="apellidoUsuario" placeholder="Garzón Medina" value="" required>
+                                                        <input type="text" class="form-control apellidoUsuario" name="apellidoUsuario" id="apellidoUsuario" placeholder="Garzón Medina" value="" required>
+                                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                                     </div>
+                                                    <p class="formulario__input-error">El apellido debe tener un máximo de 40 caracteres y solo debe contener letras.</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__correoUsuario">
-                                                    <label for="correoUsuario" class="text-primary">Documento del paciente</label>
+                                                <div class="formulario__grupo" id="grupo__documentoUsuario">
+                                                    <label for="feInputCity" class="text-primary">Número de documento</label>
                                                     <div class="formulario__grupo-input">
-                                                        <input type="email" class="form-control" name="correoUsuario" id="correoUsuario" placeholder="juan@gmail.com" value="" required>
+                                                        <input type="number" class="form-control" name="documentoPaciente" id="documentoUsuario" placeholder="1016757835" value="" required>
+                                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
                                                     </div>
+                                                    <p class="formulario__input-error">El número de documento solo debe contener numeros, minimo 6 digitos y maximo 16.</p>
                                                 </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <div class="formulario__grupo" id="grupo__telefonoPaciente">
+                                                    <label for="telefonoPaciente" class="text-primary">Telefono</label>
+                                                    <div class="formulario__grupo-input">
+                                                        <input type="number" class="form-control" name="telefonoPaciente" id="telefono" placeholder="3100000000" value="" required>
+                                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                                                    </div>
+                                                    <p class="formulario__input-error">El número de telefono solo debe contener numeros, minimo 7 digitos y maximo 12.</p>
+                                                </div>
+                                            </div>
                                             </div>
                                         <div class="form-row">
+                                            
+                                            
                                             <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__fechaNacimiento">
-                                                    <label for="feInputAddress" class="text-primary">Telefono</label>
-                                                    <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="telefonoUsuario" id="telefono" placeholder="3100000000" value="" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__fechaNacimiento">
+                                                <div class="formulario__grupo" id="grupo__edadPaciente">
                                                     <label for="feInputAddress" class="text-primary">Edad</label>
                                                     <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="telefonoUsuario" id="telefono" placeholder="31" value="" required>
+                                                        <input type="number" class="form-control" name="edadPaciente" id="telefono" placeholder="31" value="" required>
+                                                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+
                                                     </div>
+                                                    <p class="formulario__input-error">La edad solo debe contener numeros, minimo 1 digitos y maximo 3.</p>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6">
+  <div class="form-group col-md-6">
                                                 <div class="formulario__grupo" id="grupo__documentoUsuario">
                                                     <label for="feInputCity" class="text-primary">Especialidad de paciente</label>
                                                     <div class="formulario__grupo-input">
-                                                    <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                                    <select name="especialidadPaciente" class="form-select " aria-label="Default select example" >
                                                         <option selected>Selecciona una especialidad</option>
                                                         <option value="1">Ventilado</option>
                                                         <option value="2">Infante</option>
@@ -122,29 +138,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                             <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__documentoUsuario">
-                                                    <label for="feInputCity" class="text-primary">Número de documento</label>
-                                                    <div class="formulario__grupo-input">
-                                                        <input type="number" class="form-control" name="documentoUsuario" id="documentoUsuario" placeholder="1016757835" value="" required>
-                                                    </div>
-                                                </div>
                                             </div>
+                                           
+                                            </div>
+
+                                             
 
                                               
 
-                                        </div>
+                                    
 
-                                       
-
-
-                                            
-                                        </div>
-                                                                   
+                
                                         </div>
                                         </div>
-                                        <br><button type="submit" class="btn btn-primary mr-2" style="float: right;">Crear turno</button>
+                                        <br><button type="submit" class="btn btn-primary mr-2" style="float: right;">Crear Paciente</button>
                                     </form>
                                 </div>
                             </div>
@@ -154,7 +161,37 @@
             </div>
         </div>
     </div>
+ <script>
 
-  <script src="../static/js/formModificacionUsuarios.js"></script>
+    const name = document.querySelector('.nombrePaciente')
+    const lastname = document.querySelector('.apellidoUsuario')
+
+
+
+    function impDatos(){
+        nombre = document.querySelector('.nombre')
+        apellido = document.querySelector('.apellido')
+
+        nombre.value = name.value;
+        apellido.value = lastname.value;
+
+    }
+
+    name.addEventListener('input', (event) => {
+        impDatos();
+    })
+
+    lastname.addEventListener('input', (event) => {
+        impDatos();
+    })
+
+
+
+
+
+</script>
+  <script src="{{ url_for('static', filename='js/formModificacionUsuarios.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/progressBar.js') }}"></script>
+
 
 {% endblock main__content %} 

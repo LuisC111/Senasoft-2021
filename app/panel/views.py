@@ -1,13 +1,14 @@
 from flask import redirect, url_for, render_template, flash, request, jsonify, Response
 from . import panel
 from flask_login import login_manager, login_user, LoginManager, login_required, logout_user, current_user
-from ..models import Usuario, TipoUsuario, db, Paciente, Task, TaskSchema, Especialidad
+from ..models import Usuario, TipoUsuario, TipoDocumento, db, Paciente, Task, TaskSchema, Especialidad
 from functools import wraps
 from ..auth.views import login_manager
 import json
 from fpdf import FPDF
 import uuid
 import jsonpickle
+from flask_cors import CORS, cross_origin
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -75,14 +76,15 @@ def panelCalendarUsuario(idUsuario):
           
     return render_template('panelCalendar.html', **context)
 
-@panel.route('/calendar/jsonfile')
+@panel.route('/calendar/jsonfile/<userId>')
+@cross_origin(supports_credentials=True)
 @login_required
-def jsonfile():
-    taskData = Task.query.all()
+def jsonfile(userId):
+    taskData = Task.query.filter(Task.idUsuarioFK == userId).all()
     task_Schema = TaskSchema(many=True)
     output = task_Schema.dump(taskData)
 
-    return jsonify({'data' : output})
+    return jsonify(output)
 
 @panel.route('/usuarios')
 #@admin_required
@@ -230,16 +232,99 @@ def panelCrearPaciente():
         'userLogged' : current_user
     }
 
+    if request.method == 'POST':
+        nombrePaciente = request.form['nombrePaciente']
+        apellidoPaciente = request.form['apellidoPaciente']
+        documentoPaciente = request.form['documentoPaciente']
+        telefonoPaciente = request.form['telefonoPaciente']
+        edadPaciente = request.form['edadPaciente']
+        especialidadPaciente = request.form.get('especialidadPaciente')
+
+        newPaciente = Paciente(nombrePaciente, apellidoPaciente, documentoPaciente, telefonoPaciente, 1, edadPaciente, especialidadPaciente)
+        # nombrePaciente, apellidoPaciente, documentoPaciente, telefonoPaciente, estadoPaciente, edadPaciente, idEspecialidadFK
+        
+        db.session.add(newPaciente)
+        db.session.commit()
+
+        flash('Se ha creado un nuevo paciente correctamente', 'success')
+
+        return redirect(url_for('panel.panelPaciente'))
+
+    return render_template('crearPaciente.html', **context)
+
+@panel.route('/paciente/editarPaciente/<int:idPaciente>', methods=['GET', 'POST'])
+@login_required
+def editarPaciente(idPaciente):
+    all_data = Paciente.query.filter(Paciente.estadoPaciente == 1).all()
+
+    context = {
+        'nombreUsuario' : current_user.nombreUsuario,
+        'userLogged' : current_user,
+        'pacientes' : all_data
+    }
+
+    usuarioIdURL = idPaciente
+    pacienteData = Paciente.query.filter(Paciente.idPaciente == usuarioIdURL).first()
+
+    if pacienteData:
+        context['PacienteData'] = pacienteData
+    else:
+        flash('no hay paciente data', 'error')
+
+    if request.method == 'POST':
+        nombreUsuario = request.form['nombreUsuario']
+        apellidoUsuario = request.form['apellidoUsuario']
+        telefonoUsuario = request.form['telefonoUsuario']
+        documentoUsuario = request.form['documentoUsuario']
+        edadUsuario = request.form['edadUsuario']
+        especialidadUsuario = request.form.get('especialidadUsuario')
+
+        pacienteData.nombrePaciente = nombreUsuario
+        pacienteData.apellidoPaciente = apellidoUsuario
+        pacienteData.telefonoPaciente = telefonoUsuario
+        pacienteData.documentoPaciente = documentoUsuario
+        pacienteData.edadPaciente = edadUsuario
+        pacienteData.idEspecialidadFK = especialidadUsuario
+
+        db.session.commit()
+
+        flash('Paciente editado correctamente', 'success')
+        return redirect(url_for('panel.panelPaciente'))
+
     return render_template('datatablesPaciente.html', **context)
+
+@panel.route('/paciente/inactivar/<int:idPaciente>')
+@login_required
+def inactivarPacientePanel(idPaciente):
+    usuarioIdURL = idPaciente
+    usuarioData = Paciente.query.filter(Paciente.idPaciente == usuarioIdURL).first()
+
+    if usuarioData:
+        if usuarioData.estadoPaciente == 1:
+            usuarioData.estadoPaciente = 0
+            db.session.commit()
+            flash('Paciente inactivado correctamente', 'success')
+
+            return redirect(url_for('panel.panelPaciente'))
+        else:
+            flash('paciente ya se encuentra inactivo', 'info')
+            return redirect(url_for('panel.panelPaciente'))
+    else:
+        flash('Error, paciente no existe', 'info')
+        return redirect(url_for('panel.panelPaciente'))
 
 @panel.route('/turnos')
 @login_required
 def panelTurnos():
     all_data = Task.query.all()
+    all_Usuario = Usuario.query.all()
+    all_Paciente = Paciente.query.all() 
     context = {
         'nombreUsuario' : current_user.nombreUsuario,
         'userLogged' : current_user,
-        'turnos' : all_data
+        'turnos' : all_data,
+        'usuarios' : all_Usuario,
+        'pacientes' : all_Paciente
     }
 
     return render_template('datatablesPanelTurnos.html', **context )
@@ -289,46 +374,7 @@ def panelEditar(userId):
 @panel.route('/reporte/pdf', methods=['GET', 'POST'])
 @login_required
 def download_report ():
-    dataUsuario = db.session.query(Usuario,TipoDocumento,TipoUsuario,Especialidad).outerjoin(TipoDocumento,TipoUsuario,Especialidad).all()
-    
-    pdf = FPDF()
-    pdf.add_page()
-        
-    page_width = pdf.w - 2 * pdf.l_margin
-    col_width = page_width/8
-        
-    pdf.set_font('Times','B',14.0) 
-    pdf.cell(page_width, 0.0, 'Reporte vehiculos', align='C')
-    pdf.ln(10)
 
-    pdf.set_font('Courier', '', 12)
-    pdf.cell(col_width, pdf.font_size, 'Placa', border=1, ln=0, align='C', fill=0)
-    pdf.cell(col_width, pdf.font_size, 'Modelo', border=1, ln=0, align='C', fill=0)
-    pdf.cell(col_width, pdf.font_size, 'Marca', border=1, ln=0, align='C', fill=0)
-    pdf.cell(col_width, pdf.font_size, 'Estado', border=1, ln=0, align='C', fill=0)
-    pdf.cell(col_width, pdf.font_size, 'Precio', border=1, ln=0, align='C', fill=0)
-    pdf.cell(col_width, pdf.font_size, 'Nombre', border=1, ln=0, align='C', fill=0)
-    pdf.cell(col_width, pdf.font_size, 'Apellido', border=1, ln=0, align='C', fill=0)
-    pdf.cell(col_width, pdf.font_size, 'Categoria',border=1, ln=0, align='C', fill=0)
-        
-    pdf.ln(4)
-        
-    th = pdf.font_size
-    pdf.set_font('Courier', '', 12)
-    for row, row2, row3 in datosVehiculos:
-        pdf.cell(col_width, th, str(row.vehPlaca), border=1, ln=0, align='C')
-        pdf.cell(col_width, th, str(row.vehModelo), border=1, ln=0, align='C')
-        pdf.cell(col_width, th, row.vehMarca, border=1, ln=0, align='C')
-        pdf.cell(col_width, th, row.vehEstado, border=1, ln=0, align='C')
-        pdf.cell(col_width, th, str(row.vehPrecio), border=1, ln=0, align='C')
-        pdf.cell(col_width, th, row3.datNombre, border=1, ln=0, align='C')
-        pdf.cell(col_width, th, row3.datApellido, border=1, ln=0, align='C')
-        pdf.cell(col_width, th, str(row2.catTipo), border=1, ln=0, align='C')
-        pdf.ln(th)
-        
-    pdf.ln(10)
-        
-    pdf.set_font('Times','',10.0) 
-    pdf.cell(page_width, 0.0, '- Fin reporte -', align='C')
+    dataUsuario = db.session.query(Usuario,TipoDocumento,TipoUsuario,Especialidad).outerjoin(TipoDocumento,TipoUsuario,Especialidad).all()
 
     return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=vendedor_report.pdf'})

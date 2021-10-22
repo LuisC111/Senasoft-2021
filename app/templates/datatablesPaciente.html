@@ -15,7 +15,14 @@
 {% endblock main_type %}
 
 {% block main__content %}
-<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+{% if PacienteData %}
+<script>
+    $(document).ready(function(){
+        $("#modalForm").modal("show");
+    });
+</script>
+<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -26,49 +33,28 @@
                 <form action="#" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Nombre(s)</label>
-                        <input type="text" class="form-control" id="password" name="nombreUsuario" placeholder="Nombre" value="" />
+                        <input type="text" class="form-control" id="password" name="nombreUsuario" placeholder="Nombre" value="{{PacienteData.nombrePaciente}}" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Apellido(s)</label>
-                        <input type="text" class="form-control" id="password" name="apellidoUsuario" placeholder="Apellido" value="" />
+                        <input type="text" class="form-control" id="password" name="apellidoUsuario" placeholder="Apellido" value="{{PacienteData.apellidoPaciente}}" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Telefono</label>
-                        <input type="text" class="form-control" id="password" name="telefonoUsuario" placeholder="Telefono" value="" />
+                        <input type="text" class="form-control" id="password" name="telefonoUsuario" placeholder="Telefono" value="{{PacienteData.telefonoPaciente}}" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Edad</label>
-                        <input type="text" class="form-control" id="password" name="telefonoUsuario" placeholder="Telefono" value="" />
+                        <input type="number" class="form-control" id="password" name="edadUsuario" placeholder="Edad" value="{{PacienteData.edadPaciente}}" />
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Especialidad</label>
-                       <div class="formulario__grupo-input">
-                            <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
-                                <option value="1">Cedula de Ciudadanía</option>
-                                <option value="2">Tarjeta de identidad</option>
-                                <option value="3">Pasaporte</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Numero de documento</label>
-                        <input type="text" class="form-control" name="documentoUsuario" placeholder="Documento" value=""/>
+                     <div class="mb-3">
+                        <label class="form-label">Número de documento</label>
+                        <input type="number" class="form-control" id="password" name="documentoUsuario" placeholder="Documento" value="{{PacienteData.documentoPaciente}}" />
                     </div>
                    <div class="mb-3">
                         <label class="form-label">Especialidad</label>
                        <div class="formulario__grupo-input">
-                            <select name="tipoUsuario" id="tipoUsuario" class="form-select " aria-label="Default select example" >
-                                <option value="1">Ventilado</option>
-                                <option value="2">Infante</option>
-                                <option value="3">Medicamentos</option>
-                                <option value="4">General</option>
-                            </select>
-                        </div>
-                    </div>
-                     <div class="mb-3" style="display: none" id="selectEspecialidad">
-                        <label class="form-label">Especialidad asignada</label>
-                       <div class="formulario__grupo-input">
-                            <select name="tipoEspecialidad" class="form-select " aria-label="Default select example"s>
+                            <select name="especialidadUsuario" id="tipoUsuario" class="form-select " aria-label="Default select example" >
                                 <option value="1">Ventilado</option>
                                 <option value="2">Infante</option>
                                 <option value="3">Medicamentos</option>
@@ -84,6 +70,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 
 
@@ -95,7 +82,7 @@
                         <div class="card-body">
                             <p class="card-title">Tabla de pacientes</p>
                             
-                            <a href="crear"><button class="btn btn-behance">Crear paciente</button></a><br><br>
+                            <a href="{{url_for('panel.panelCrearPaciente')}}"><button class="btn btn-behance">Crear paciente</button></a><br><br>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
@@ -120,9 +107,22 @@
                                                         <th style="font-weight: normal;">{{paciente.apellidoPaciente}}</th>
                                                         <th style="font-weight: normal;">{{paciente.telefonoPaciente}}</th>
                                                         <th style="font-weight: normal;">{{paciente.edadPaciente}}</th>
-                                                        <th style="font-weight: normal;">{{paciente.idEspecialidadFK}}</th>
-                                                        <td><a href="">Editar</a></td>
-                                                        <td><a href="">Inactivar</a></td>
+                                                        {% if paciente.idEspecialidadFK == 1 %}
+                                                            {% set especialidadPaciente = 'Ventilado' %}
+                                                        {% endif %}
+                                                        {% if paciente.idEspecialidadFK == 2 %}
+                                                            {% set especialidadPaciente = 'Infante' %}
+                                                        {% endif %}
+                                                        {% if paciente.idEspecialidadFK == 3 %}
+                                                            {% set especialidadPaciente = 'Medicamentos' %}
+                                                        {% endif %}
+                                                        {% if paciente.idEspecialidadFK == 4 %}
+                                                            {% set especialidadPaciente = 'General' %}
+                                                        {% endif %}
+
+                                                        <th style="font-weight: normal;">{{especialidadPaciente}}</th>
+                                                        <td><a href="{{url_for('panel.editarPaciente', idPaciente=paciente.idPaciente)}}">Editar</a></td>
+                                                        <td><a href="{{url_for('panel.inactivarPacientePanel', idPaciente=paciente.idPaciente)}}">Inactivar</a></td>
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>

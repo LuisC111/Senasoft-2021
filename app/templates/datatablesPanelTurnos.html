@@ -31,15 +31,37 @@
                                                 <tr>
                                                     <th>Turno#</th>
                                                     <th>Nombre</th>
-                                                    <th>Apellido</th>
+                                                    <th>Descripcion Turno</th>
                                                     <th>Fecha</th>
-                                                    <th>Hora</th>
-                                                    <th>Lugar</th>
-                                                    <th>Updated at</th>
+                                                    <th>Hora Inicio</th>
+                                                    <th>Url reunion</th>
+                                                    <th>Enfermera</th>
+                                                    <th>Paciente</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                {% for turno in turnos %}
+                                                    <tr>
+                                                        <td>{{turno.idTask}}</td>
+                                                        <td>{{turno.nombreTask}}</td>
+                                                        <td>{{turno.descTurno}}</td>
+                                                        <td>{{turno.horaInicio}}</td>
+                                                        <td>{{turno.horaFin}}</td>
+                                                        <td>{{turno.urlReunion}}</td>
+                                                        {% for usuario in usuarios %} 
+                                                            {% if usuario.idUsuario == turno.idUsuarioFK %}
+                                                                {% set nombreEnfermera = usuario.nombreUsuario %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% for paciente in pacientes %} 
+                                                            {% if paciente.idPaciente == turno.idPacienteFK %}
+                                                                {% set nombrePaciente = paciente.nombrePaciente %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <td>{{nombreEnfermera}}</td>
+                                                        <td>{{nombrePaciente}}</td>
+                                                    </tr>
+                                                {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>

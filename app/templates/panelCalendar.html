@@ -39,17 +39,18 @@ endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
 </script>
 
 <script>
-  function loadData(){
+let itemList = [];
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
+      if (xhttp.readyState == 4 && this.status == 200) {
         console.log(this.responseText);
-          let item = JSON.parse(this.responseText);
+        item = JSON.parse(this.responseText);
+        itemList.push(item);
+        console.log(itemList);
       }
     };
-    xhttp.open("GET", "http://localhost:5000/panel/calendar/jsonfile", true);
+    xhttp.open("GET", 'http://127.0.0.1:5000/panel/calendar/jsonfile/6', true);
     xhttp.send();
-  } 
   document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
     var today = new Date();
@@ -105,34 +106,24 @@ endblock body_type %} {% block main_type %} {{ super() }} {% endblock main_type
         }
       },
       editable: true,
-      dayMaxEvents: true, // allow "more" link when too many events
+      dayMaxEvents: true,
       events: [
-        {
-          title: "Turno de todo el día",
-          start: "2021-10-22",
-        },
-        {
-          title: "Turno largo",
-          start: "2021-10-20",
-          end: "2021-10-20",
-        },
-        {
-          groupId: 999,
-          title: "Turno largo",
-          start: "2021-10-21T16:00",
-        },
-        {
-          title: "Turno de todo el día",
-          start: "2021-10-22T07:00:00",
-        },
-        {
-          title: "Click para ir a Google",
-          url: "http://google.com/",
-          start: "2021-10-22",
-        },
-      ],
+    {
+      title: 'My Event',
+      start: '2021-10-22',
+      description: 'This is a cool event'
+    }
+    // more events here
+  ],
+  eventRender: function(info) {
+    var tooltip = new Tooltip(info.el, {
+      title: info.event.extendedProps.description,
+      placement: 'top',
+      trigger: 'hover',
+      container: 'body'
     });
-
+  }
+    });
     calendar.render();
   });
 </script>

@@ -1,5 +1,6 @@
 # Importación del framework usado, Flask
 from flask import Flask
+from flask_cors import CORS, cross_origin
 
 # Importancion de las configuraciones y blueprints
 from .config import Config
@@ -19,7 +20,7 @@ def create_app():
 
     login_manager.init_app(app)
 
-
+    CORS(app, support_credentials=True)
     db.init_app(app)
     ma.init_app(app)
     return app
