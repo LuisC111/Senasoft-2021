@@ -1,70 +1,46 @@
-{% extends 'base.html' %}
-{% block title %}
-{{ super() }}
- Tabla detallada
-{% endblock title %}
-{% block header_type %}
- {% include 'headerPanelUsuario.html' %}
-{% endblock header_type %}
-
-{% block body_type %}
-{% endblock body_type %}
-
-{% block main_type %}
-{{ super() }}
-{% endblock main_type %}
-
-{% block main__content %}
-    <div class="main-panel">
-        <div class="content-wrapper">
-            <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-title">Tabla de turnos</p>
-                            <a href="crear"><button class="btn btn-behance">Crear Turno</button></a><br /><br>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="table-responsive">
-                                        <table id="usuariosTable" class="table table-striped table-bordered display expandable-table" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Turno#</th>
-                                                    <th>Nombre</th>
-                                                    <th>Descripcion Turno</th>
-                                                    <th>Fecha</th>
-                                                    <th>Hora Inicio</th>
-                                                    <th>Url reunion</th>
-                                                    <th>Enfermera</th>
-                                                    <th>Paciente</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for turno in turnos %}
-                                                    <tr>
-                                                        <td>{{turno.idTask}}</td>
-                                                        <td>{{turno.nombreTask}}</td>
-                                                        <td>{{turno.descTurno}}</td>
-                                                        <td>{{turno.horaInicio}}</td>
-                                                        <td>{{turno.horaFin}}</td>
-                                                        <td>{{turno.urlReunion}}</td>
-                                                        {% for usuario in usuarios %} 
-                                                            {% if usuario.idUsuario == turno.idUsuarioFK %}
-                                                                {% set nombreEnfermera = usuario.nombreUsuario %}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        {% for paciente in pacientes %} 
-                                                            {% if paciente.idPaciente == turno.idPacienteFK %}
-                                                                {% set nombrePaciente = paciente.nombrePaciente %}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        <td>{{nombreEnfermera}}</td>
-                                                        <td>{{nombrePaciente}}</td>
-                                                    </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
+{% extends 'base.html' %} {% block title %} {{ super() }} Tabla detallada {% endblock title %} {% block header_type %} {% include 'headerPanelUsuario.html' %} {% endblock header_type %} {% block body_type %} {% endblock body_type %} {% block main_type
+%} {{ super() }} {% endblock main_type %} {% block main__content %}
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Tabla de turnos</p>
+                        <a href="{{url_for('panel.panelCrearTurno')}}"><button class="btn btn-behance">Crear Turno</button></a><br /><br>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table id="usuariosTable" class="table table-striped table-bordered display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Turno#</th>
+                                                <th>Nombre</th>
+                                                <th>Descripcion Turno</th>
+                                                <th>Fecha</th>
+                                                <th>Hora Inicio</th>
+                                                <th>Url reunion</th>
+                                                <th>Enfermera</th>
+                                                <th>Paciente</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for turno in turnos %}
+                                            <tr>
+                                                <td>{{turno.idTask}}</td>
+                                                <td>{{turno.nombreTask}}</td>
+                                                <td>{{turno.descTurno}}</td>
+                                                <td>{{turno.horaInicio}}</td>
+                                                <td>{{turno.horaFin}}</td>
+                                                <td>{{turno.urlReunion}}</td>
+                                                {% for usuario in usuarios %} {% if usuario.idUsuario == turno.idUsuarioFK %} {% set nombreEnfermera = usuario.nombreUsuario %} {% endif %} {% endfor %} {% for paciente in pacientes %} {% if paciente.idPaciente == turno.idPacienteFK %} {% set nombrePaciente
+                                                = paciente.nombrePaciente %} {% endif %} {% endfor %}
+                                                <td>{{nombreEnfermera}}</td>
+                                                <td>{{nombrePaciente}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -73,6 +49,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
-{% endblock main__content %} 
+{% endblock main__content %}

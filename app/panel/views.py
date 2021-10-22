@@ -119,7 +119,7 @@ def panelCalendarEliminar(idCalendar):
         
         return redirect(url_for('panel.panelCalendarUsuario', idUsuario=idUsuarioActual))
 
-@panel.route('/calendar/editar/<int:idCalendar>', methods=['GET', 'POST'])
+@panel.route('/calendar/editar/<int:idCalendar>', methods=['POST'])
 @login_required
 def panelCalendarEditar(idCalendar):
     if request.method == 'POST':
@@ -128,6 +128,8 @@ def panelCalendarEditar(idCalendar):
 
         nombreTask = request.form['nombreTask']
         fechaInicio = request.form['fechaInicio']
+        print(fechaInicio)
+       
         fechaFin = request.form['fechaFin']
         
         dataTask.nombreTask = nombreTask
@@ -171,7 +173,7 @@ def panelCrearUsuario():
         documentoUsuario = request.form['documentoUsuario']
         tipoDocumento = request.form.get('tipoDocumento')
         tipoUsuario = request.form.get('tipoUsuario')
-        tipoEspecialidad = request.form.get('tipoEspecialidad')
+        tipoEspecialidad = int(request.form.get('tipoEspecialidad'))
         confirmationHash = str(uuid.uuid4().hex)
 
         # Busqueda en base de datos si el usuario existe
@@ -180,7 +182,7 @@ def panelCrearUsuario():
         if usuarioData:
             flash('Este correo ya se encuentra registrado!', 'error')
         else:
-            if tipoEspecialidad == 1 or tipoEspecialidad == 2 or tipoEspecialidad == 3 or tipoEspecialidad ==4:
+            if tipoUsuario == 3 or tipoUsuario == '3':
                 newUsuario = Usuario(correoUsuario, passwordUsuario, nombreUsuario, apellidoUsuario, telefonoUsuario, documentoUsuario, 1, tipoDocumento, tipoUsuario, confirmationHash, tipoEspecialidad)
 
                 db.session.add(newUsuario)
@@ -383,7 +385,7 @@ def panelTurnos():
 
     return render_template('datatablesPanelTurnos.html', **context )
 
-@panel.route('/crearTurno', methods=['GET', 'POST'])
+@panel.route('/turno/crearturno', methods=['GET', 'POST'])
 @login_required
 def panelCrearTurno():
     context = {
@@ -391,7 +393,15 @@ def panelCrearTurno():
         'userLogged' : current_user
     }
 
-    return render_template('datatablesPanelTurnos.html', **context)
+    if request.method == 'POST':
+        nombreTurno = request.form['nombreTurno']
+        descripcionTurno = request.form['descripcionTurno']
+        fechaInicio = request.form['fechaInicio']
+        edadUsuario = request.form['edadUsuario']
+        edadUsuario = request.form['edadUsuario']
+        edadUsuario = request.form['edadUsuario']
+
+    return render_template('crearTurno.html', **context)
 
 @panel.route('/editarPerfil/<userId>', methods=['GET', 'POST'])
 @login_required
@@ -424,11 +434,3 @@ def panelEditar(userId):
     }
 
     return render_template('editarPerfilUsuario.html', **context)
-
-@panel.route('/reporte/pdf', methods=['GET', 'POST'])
-@login_required
-def download_report ():
-
-    dataUsuario = db.session.query(Usuario,TipoDocumento,TipoUsuario,Especialidad).outerjoin(TipoDocumento,TipoUsuario,Especialidad).all()
-
-    return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=vendedor_report.pdf'})

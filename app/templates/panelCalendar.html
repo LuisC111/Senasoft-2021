@@ -3,32 +3,21 @@
 <div class="main-panel">
     <div class="content-wrapper">
 
-        <a href="#"><button class="btn btn-success" style="margin-left: 1200px">
+        <a href="#"><button class="btn btn-success" onclick="printContent('calendar');" style="margin-left: 1200px">
         Generar reporte</button><br /><br/></a>
 
         <div id="calendar" style="width: 100%"></div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-footer d-block">
-                    <button type="submit" onclick="" class="btn btn-warning float-end">Editar</button>
-                </div>
-                <div class="modal-footer d-block">
-                    <button type="submit" class="btn btn-warning float-end">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+<script>
+    function printContent(el) {
+        var restorepage = $('body').html();
+        var printcontent = $('#' + el).clone();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+    }
+</script>
 <script>
     let itemList;
     let item;
@@ -49,6 +38,10 @@
     };
     xhttp.open("GET", 'http://127.0.0.1:5000/panel/calendar/jsonfile/{{ enfermeraSeleccionada }}', true);
     xhttp.send();
+
+    function display() {
+        $("#calendar").printElement();
+    }
 
     function createCalendar(item) {
         let itemList = item;
@@ -77,17 +70,16 @@
                         '<input type="text" id="swal-input1" name="nombreTask" class="swal2-input" placeholder="Nombre del turno">' +
                         '<label class="float-left">Fecha de inicio</label>' +
                         '<input type="datetime-local" id="swal-input2" name="fechaInicio" class="swal2-input" placeholder="Fecha Inicio">' +
-                        '<label class="float-left">Fecha de fin</label>' +
-                        '<input type="datetime-local" id="swal-input3" name="fechaFin" class="swal2-input" placeholder="Fecha Fin">' +
-                        '<button class="btn btn-behance">Crear</button>' +
+                        '<input type="hidden" id="swal-input2" name="fechaFin" class="swal2-input" placeholder="Fecha Inicio">' +
+                        `<button class="btn btn-behance" onclick="sumDateTime()">Crear</button>` +
                         '</form>',
                     type: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Asignar!",
+                    showConfirmButton: false,
                     closeOnConfirm: false,
                     closeModal: false,
                 });
+
                 calendar.unselect();
             },
             eventClick: function(info) {

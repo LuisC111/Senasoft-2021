@@ -1,20 +1,5 @@
-{% extends 'base.html' %}
-{% block title %}
-{{ super() }}
- Crear turno
-{% endblock title %}
-{% block header_type %}
- {% include 'headerPanelUsuario.html' %}
-{% endblock header_type %}
-
-{% block body_type %}
-{% endblock body_type %}
-
-{% block main_type %}
-{{ super() }}
-{% endblock main_type %}
-
-{% block main__content %}
+{% extends 'base.html' %} {% block title %} {{ super() }} Crear turno {% endblock title %} {% block header_type %} {% include 'headerPanelUsuario.html' %} {% endblock header_type %} {% block body_type %} {% endblock body_type %} {% block main_type %}
+{{ super() }} {% endblock main_type %} {% block main__content %}
 
 <div class="main-panel">
     <div class="content-wrapper">
@@ -49,111 +34,111 @@
                             <strong class="text-muted d-block mb-2">Descripción</strong>
                         </li>
                     </ul>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="card card-small mb-4">
-                    <div class="card-header border-bottom">
-                        <h6 class="m-0">Detalles del Perfil</h6>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-3">
-                            <div class="row">
-                                <div class="col">
-                                    <form action="" method="POST" class="pro-form" id="pro-form" value="" enctype="multipart/form-data">
+                </div>
+                <div class="col-lg-8">
+                    <div class="card card-small mb-4">
+                        <div class="card-header border-bottom">
+                            <h6 class="m-0">Detalles del Perfil</h6>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <form action="" method="POST" class="pro-form" id="pro-form" value="" enctype="multipart/form-data">
 
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__nombreUsuario">
-                                                    <label for="nombreUsuario" class="text-primary">Nombre del turno</label>
-                                                    <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre del turno" value="" required>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <div class="formulario__grupo" id="grupo__nombreUsuario">
+                                                        <label for="nombreUsuario" class="text-primary">Nombre del turno</label>
+                                                        <div class="formulario__grupo-input">
+                                                            <input type="text" class="form-control" name="nombreTurno" id="nombreUsuario" placeholder="Nombre del turno" value="" required>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__apellidoUsuario">
-                                                    <label for="apellidoUsuario" class="text-primary">Descripción</label>
-                                                    <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="apellidoUsuario" id="apellidoUsuario" placeholder="Descripción del turno" value="" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__correoUsuario">
-                                                    <label for="correoUsuario" class="text-primary">Fecha de inicio</label>
-                                                    <div class="formulario__grupo-input">
-                                                        <input type="datetime" class="form-control" name="correoUsuario" id="correoUsuario" placeholder="" value="" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__fechaNacimiento">
-                                                    <label for="feInputAddress" class="text-primary">Fecha de fin</label>
-                                                    <div class="formulario__grupo-input">
-                                                        <input type="datetime" class="form-control" name="telefonoUsuario" id="telefono" placeholder="" value="" required>
+                                                <div class="form-group col-md-6">
+                                                    <div class="formulario__grupo" id="grupo__apellidoUsuario">
+                                                        <label for="apellidoUsuario" class="text-primary">Descripción</label>
+                                                        <div class="formulario__grupo-input">
+                                                            <input type="text" class="form-control" name="descripcionTurno" id="apellidoUsuario" placeholder="Descripción del turno" value="" required>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__fechaNacimiento">
-                                                    <label for="feInputAddress" class="text-primary">URL (Opcional)</label>
-                                                    <div class="formulario__grupo-input">
-                                                        <input type="text" class="form-control" name="telefonoUsuario" id="telefono" placeholder="31" value="https://google.com/" required>
+                                                <div class="form-group col-md-6">
+                                                    <div class="formulario__grupo" id="grupo__correoUsuario">
+                                                        <label for="correoUsuario" class="text-primary">Fecha de inicio</label>
+                                                        <div class="formulario__grupo-input">
+                                                            <input type="datetime" class="form-control" name="fechaInicio" id="correoUsuario" placeholder="" value="" required>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__documentoUsuario">
-                                                    <label for="feInputCity" class="text-primary">Enfermera encargada</label>
-                                                    <div class="formulario__grupo-input">
-                                                    <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <div class="formulario__grupo" id="grupo__fechaNacimiento">
+                                                            <label for="feInputAddress" class="text-primary">Fecha de fin</label>
+                                                            <div class="formulario__grupo-input">
+                                                                <input type="datetime" class="form-control" name="telefonoUsuario" id="telefono" placeholder="" value="" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-6">
+                                                            <div class="formulario__grupo" id="grupo__fechaNacimiento">
+                                                                <label for="feInputAddress" class="text-primary">URL (Opcional)</label>
+                                                                <div class="formulario__grupo-input">
+                                                                    <input type="text" class="form-control" name="telefonoUsuario" id="telefono" placeholder="31" value="https://google.com/" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <div class="formulario__grupo" id="grupo__documentoUsuario">
+                                                                <label for="feInputCity" class="text-primary">Enfermera encargada</label>
+                                                                <div class="formulario__grupo-input">
+                                                                    <select name="tipoDocumento" class="form-select " aria-label="Default select example">
                                                         <option selected>Selecciona una enfermera</option>
                                                         <option value="1">Esto toca con un foreach?xd</option>
                                                     </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                             <div class="form-group col-md-6">
-                                                <div class="formulario__grupo" id="grupo__documentoUsuario">
-                                                    <label for="feInputCity" class="text-primary">Paciente asignado</label>
-                                                    <div class="formulario__grupo-input">
-                                                    <select name="tipoDocumento" class="form-select " aria-label="Default select example" >
+                                                        <div class="form-group col-md-6">
+                                                            <div class="formulario__grupo" id="grupo__documentoUsuario">
+                                                                <label for="feInputCity" class="text-primary">Paciente asignado</label>
+                                                                <div class="formulario__grupo-input">
+                                                                    <select name="tipoDocumento" class="form-select " aria-label="Default select example">
                                                         <option selected>Selecciona un paciente</option>
                                                         <option value="1">Esto toca con un foreach x2?xd</option>
                                                     </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
                                                     </div>
+
+
+
+
+
                                                 </div>
+
                                             </div>
-
-                                              
-
-                                        </div>
-
-                                       
-
-
-                                            
-                                        </div>
-                                                                   
-                                        </div>
-                                        </div>
-                                        <br><button type="submit" class="btn btn-primary mr-2" style="float: right;">Crear turno</button>
+                                    </div>
+                                    <br><button type="submit" class="btn btn-primary mr-2" style="float: right;">Crear turno</button>
                                     </form>
                                 </div>
-                            </div>
-                        </li>
+                    </div>
+                    </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-  <script src="../static/js/formModificacionUsuarios.js"></script>
+    <script src="../static/js/formModificacionUsuarios.js"></script>
 
-{% endblock main__content %} 
+    {% endblock main__content %}
