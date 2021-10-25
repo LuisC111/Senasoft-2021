@@ -1,0 +1,30 @@
+version: "3.4"
+services:
+  webserver:
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    links:
+      - mysqldb
+    restart: 'always'
+  mysqldb:
+    image: mariadb:latest
+    restart: 'always'
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: SenaSoft
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: 'Phpmyadmin'
+    links:
+      - mysqldb
+    environment:
+      PMA_HOST: mysqldb
+      PMA_PORT: 3306
+    ports:
+      - '800:80'
