@@ -1,6 +1,6 @@
 # Flask App
 
-Using Flask to build a Senasoft exercise.
+Using Flask to build a Senasoft App.
 
 Integration with Flask-restplus, Flask-Cors, Flask-Testing, Flask-SQLalchemy,and Flask-OAuth extensions.
 
