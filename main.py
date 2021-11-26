@@ -5,7 +5,7 @@ from sqlalchemy_utils import database_exists, create_database
 import os
 
 # Crear base de datos si esta no existe
-engine = create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/SenaSoft")
+engine = create_engine(os.getenv('CONNECTION_STRING', 'mariadb+mariadbconnector://root:''@127.0.0.1:3306/SenaSoft'))
 if not database_exists(engine.url):
     create_database(engine.url)
     os.system('python dbCreator.py')
@@ -23,4 +23,7 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
+    if os.getenv('PRODUCTION'):
+        os.system('python dbCreator.py')
+
     app.run(host='0.0.0.0', port=5000, debug=True)
