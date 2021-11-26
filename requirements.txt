@@ -16,6 +16,9 @@ mariadb==1.0.7
 MarkupSafe==2.0.1
 marshmallow==3.14.0
 marshmallow-sqlalchemy==0.26.1
+psycopg2-binary==2.9.2
+six==1.16.0
 SQLAlchemy==1.4.26
+SQLAlchemy-Utils==0.37.9
 Werkzeug==2.0.2
 WTForms==2.3.3
