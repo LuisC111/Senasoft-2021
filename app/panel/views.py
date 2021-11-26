@@ -67,14 +67,19 @@ def panelCalendar():
 @panel.route('/calendar/<int:idUsuario>', methods=['GET', 'POST'])
 @login_required
 def panelCalendarUsuario(idUsuario):
+
+    if current_user.idUsuario != idUsuario:
+        flash('No puedes ver el calendario de otro usuario', 'info')
+        return redirect(url_for('panel.panelInicio'))
+    else:
     
-    context = {
-        'nombreUsuario' : current_user.nombreUsuario,
-        'userLogged' : current_user,
-        'enfermeraSeleccionada' : idUsuario
-    }
-          
-    return render_template('panelCalendar.html', **context)
+        context = {
+            'nombreUsuario' : current_user.nombreUsuario,
+            'userLogged' : current_user,
+            'enfermeraSeleccionada' : idUsuario
+        }
+            
+        return render_template('panelCalendar.html', **context)
 
 @panel.route('/calendar/jsonfile/<userId>')
 @cross_origin(supports_credentials=True)
@@ -95,8 +100,8 @@ def panelCalendarNuevo(idUsuario):
         describcionTaks = "prueba"
         fechaInicio = request.form['fechaInicio']
         fechaFin = request.form['fechaFin']
-        pacienteId = request.form['idPaciente']
-        newTask = Task(nombreTask, describcionTaks, fechaInicio, fechaFin, None, idUsuario, int(pacienteId))
+        pacienteId = int(request.form['idPaciente'])
+        newTask = Task(nombreTask, describcionTaks, fechaInicio, fechaFin, None, idUsuario, pacienteId)
         # nombreTask, descTurno, horaInicio, horaFin, urlReunion, idUsuarioFK,idPacienteFK
 
         db.session.add(newTask)
