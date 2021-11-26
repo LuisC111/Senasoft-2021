@@ -39,7 +39,7 @@
             createCalendar(item);
         }
     };
-    xhttp.open("GET", 'http://127.0.0.1:5000/panel/calendar/jsonfile/{{ enfermeraSeleccionada }}', true);
+    xhttp.open("GET", "{{ url_for('panel.jsonfile', userId = enfermeraSeleccionada) }}", true);
     xhttp.send();
 
     function display() {
@@ -50,8 +50,6 @@
         let fechaI = document.querySelector('#swal-input3')
         let fechaInicio = fechaI.value;
         
-        console.log(fechaI.value)
-
         var d = new Date(fechaI.value);
         
         d.setHours(d.getHours() + 12);
