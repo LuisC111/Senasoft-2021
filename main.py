@@ -17,6 +17,7 @@ app = create_app()
 def not_found(error):
     return render_template('404.html', error=error)
 
+
 # Creacion de ruta principal
 @app.route('/')
 def index():
@@ -25,5 +26,7 @@ def index():
 if __name__ == '__main__':
     if os.getenv('PRODUCTION'):
         os.system('python dbCreator.py')
+    
+    port = int(os.environ.get('PORT', 5000))
 
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)
