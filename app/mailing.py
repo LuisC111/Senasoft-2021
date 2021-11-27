@@ -3,7 +3,7 @@ import os
 
 # Variables con los datos del correo
 username = 'flowydomain@gmail.com'
-password = 'flowysi1'
+password = os.getenv('MAIL_PASS', 'flowysi1')
 
 # Conexion con servidor SMTP
 s = smtplib.SMTP('smtp.gmail.com')
